@@ -1,0 +1,30 @@
+﻿#navbar {
+    background-color: #211f26 !important;
+    color: white !important;
+    border-radius: 10px;
+    flex: 1;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+    height: 100%;
+}
+
+body {
+    background-color: #141218 !important;
+    color: white !important;
+}
+
+.mud-navmenu.mud-navmenu-default .mud-nav-link.active:not(.mud-nav-link-disabled) {
+    color: white !important;
+    background-color: #B72626 !important;
+    border-radius: 40px;
+    margin-top: -5px; /* Adjust the top padding as needed */
+    margin-bottom: -5px; /* Adjust the bottom padding as needed */
+}
+
+#navbarlink
+{
+    margin-bottom: 20px;
+    font-size: 150%;
+}

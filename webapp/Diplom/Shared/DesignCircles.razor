@@ -1,0 +1,37 @@
+﻿@inherits MudComponentBase
+
+<div class="circle-container">
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+</div>
+
+<style>
+
+    .circle {
+        height: 25px;
+        width: 25px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+    }
+
+        /* Styles for the first dot */
+    .circle1 {
+            height: 442px;
+            width: 442px;
+            background-color: #B72626;
+            bottom: -10%; /* Position in the vertical center of the first section */
+            left: -25%; /* Position in the horizontal center of the first section */
+        }
+
+        /* Styles for the second dot */
+    .circle2 {
+            height: 335px;
+            width: 335px;
+            background-color: #A72525;
+            bottom: -15%; /* Position in the vertical center of the first section */
+            left: 40%; /* Position in the horizontal center of the first section */
+            z-index: 1; /* Ensure the second dot is above the first */
+        }
+</style>
