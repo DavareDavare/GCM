@@ -1,0 +1,44 @@
+﻿<!--
+    Switch zwischen Inputfield und Wert
+-->
+@if (!IsEditing)
+{
+    <p class="values" @onclick="StartEditing">@Value TH/s</p>
+}
+else
+{
+    <input type="text" @bind="EditingValue" @onblur="UpdateValue" @onkeyup="HandleKeyPress" @ref="inputField" style="align-self: center"/>
+}
+
+@code {
+    [Parameter] public int Value { get; set; }
+    [Parameter] public EventCallback<int> ValueChanged { get; set; }
+
+    private bool IsEditing { get; set; }
+    private int EditingValue { get; set; }
+    private ElementReference inputField;
+
+    //Bool Variable um Textfeld anzuzeigen
+    //Ebenfalls Speicherung der vorherigen Variable
+    public async Task StartEditing()
+    {
+        IsEditing = true;
+        EditingValue = Value;
+    }
+
+    //Setzen des Wertes
+    private void UpdateValue()
+    {
+        IsEditing = false;
+        ValueChanged.InvokeAsync(EditingValue);
+    }
+
+    //Bestätigung der Eingabe
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" || e.Key == "Escape")
+        {
+            UpdateValue();
+        }
+    }
+}

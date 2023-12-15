@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Diplom</title>
+    <base href="/" />
+    <script src="https://kit.fontawesome.com/34ca0229da.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+</body>
+
+</html>
+
+<script>
+    function makeEditable(element) {
+
+        // Greift auf Inputfield zu
+        const editableDiv = element.nextElementSibling;
+        const percentageValue = element;
+
+        // Zeigt das Inputfield und verteckt den Value
+        // "block" damit es 100% der Breite benutzt
+        editableDiv.style.display = 'block';
+        percentageValue.style.display = 'none';
+
+        // Holt sich Wert aus paragraph und parsed ihn -> Außerdem Fokust er auf Eingabefeld, sodass direkt in Feld eingegeben werden kann -> Sonst ist es nötig in das Feld zu drücken um eine Eingabe zu tätigen bzw. sie abzubrechen
+        const input = document.getElementById('percentageInput');
+        input.value = parseFloat(percentageValue.innerText);
+        input.focus(); // Ohne Fokus müsste in Textfeld gedrückt werden, bevor Eingabe erfolgt
+
+        // Abbrüche der Eingabe
+        //Blur ist wenn aus dem Feld mit Cursord gedrückt wird, und Keyup wenn eine spezifische Taste gedrückt wird -> in diesem Fall Enter bzw. Escape
+        input.addEventListener('blur', updateValue);
+        input.addEventListener('keyup', function (event) {
+            if (event.key === 'Enter' || event.key === "Escape") {
+                updateValue();
+            }
+        });
+
+        function updateValue() {
+            // Parsed den Wert
+            const enteredValue = parseFloat(input.value);
+
+            //Setzt den eingegebenen Wert -> Wenn der Wert keine Nummer ist wird der alte Wert wieder verwendet und sonst der neu eingegebene
+            // + "TH/s" ist für Ausgabezwecke
+            percentageValue.innerText = isNaN(enteredValue) ? oldValue + 'TH/s' : enteredValue + 'TH/s';
+
+            // Versteckt Inputfield und zeigt Wert wieder an
+            editableDiv.style.display = 'none';
+            percentageValue.style.display = 'block';
+        }
+    }
+
+</script>

@@ -1,0 +1,65 @@
+﻿@inject IJSRuntime JSRuntime
+
+<style>
+    .weather {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        margin: 25px;
+    }
+
+    .entries
+    {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .time
+    {
+        font-size: 175%;
+        margin-top: -10px;
+    }
+
+    .icon
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+
+<p class="time">Wetterprognose Morgen</p>
+<div class="weather">
+    @for(int i=0; i<wetterdaten.Length; i++)
+    {
+        <div class="entries">
+            <p class="time">@times[i]</p>
+            <div class="icon">
+                @switch(wetterdaten[i])
+                {
+                    default:
+                        <MudIcon Icon="@("fa-solid fa-sun")" Size="Size.Large" Style="color: #ffffff;" /> 
+                        break;
+                    case 0:
+                        <MudIcon Icon="@("fa-solid fa-moon")" Size="Size.Large" Style="color: #ffffff;" /> 
+                        break;
+                    case 1:
+                        <MudIcon Icon="@("fa-solid fa-sun")" Size="Size.Large" Style="color: #ffffff;" />
+                        break;
+                    case 2:
+                        <MudIcon Icon="@("fa-solid fa-cloud-sun")" Size="Size.Large" Style="color: #ffffff;" />
+                        break;
+                    case 3:
+                        <MudIcon Icon="@("fa-solid fa-snowflake")" Size="Size.Large" Style="color: #ffffff;" />
+                        break;
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    public int[] wetterdaten = {0,1,2,3};
+    public string[] times = { "Vormittag", "Mittag", "Nachmittag", "Nacht" };
+
+}

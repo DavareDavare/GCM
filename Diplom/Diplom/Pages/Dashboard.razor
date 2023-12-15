@@ -1,0 +1,114 @@
+﻿@page "/dashboard"
+@using Diplom.Shared
+@inherits LayoutComponentBase
+
+<div class="grid-container">
+    <div class="griditem top-left">
+        <p>Reststrom</p>
+        <p>im Speicher</p>
+        <p class="values">@reststromPercentage %</p>
+    </div>
+    <div class="griditem top-right">
+        <p>Hashrate</p>
+        <p>der Miner</p>
+        <EditableFieldComponent Value="@hashrateValue" ValueChanged="UpdateHashrateValue"/>
+    </div>
+    <div class="griditem bottom-group">
+        <div class="upper">
+            <p>Aktueller Niederschlag</p>
+            <p class="values" style="margin-top: -10px">@niederschlagPercentage %</p>
+        </div>
+        <div class="lower">
+            <DayWeatherComponent></DayWeatherComponent>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    body{
+        overflow: hidden;
+    }
+
+    .grid-container {
+        margin-top: -100px;
+        margin-right: 100px;
+        margin-left: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+        grid-template-rows: 1fr 1fr; /* Two rows with equal height */
+        gap: 150px;
+    }
+
+    .top-left {
+        height: 400px;
+        padding: 10px;
+        position: relative;
+    }
+
+    .top-right {
+        height: 400px;
+        padding: 10px;
+    }
+
+    .bottom-group {
+        grid-column: span 2;
+        padding: 10px;
+        height: 300px;
+    }
+
+    .griditem {
+        background-color: #2B2930;
+        border: solid 2px #EADDFF;
+        border-radius: 25px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .editable {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    p {
+        text-align: center;
+        font-size: 300%;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .values {
+        margin-top: 50px;
+        font-weight: bold;
+        color: red;
+    }
+
+    .bottom-group {
+        /* Two rows with equal height */
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .upper {
+        height: 50%;
+    }
+
+    .lower {
+        height: 50%;
+        width: 100%;
+    }
+</style>
+
+
+@code {
+    private int reststromPercentage = 69;
+    private int hashrateValue = 100;
+    private int niederschlagPercentage = 42;
+
+    private void UpdateHashrateValue(int newValue)
+    {
+        hashrateValue = newValue;
+    }
+}
