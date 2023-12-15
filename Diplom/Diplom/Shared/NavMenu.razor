@@ -1,17 +1,17 @@
 ﻿<MudNavMenu>
     <div class="navbar">
         <div class="nav-item">
-            <MudNavLink id="navbarlink" Href="dashboard" Match="NavLinkMatch.All" Size="Size.Medium" Style="color: #ffffff;">
+            <MudNavLink id="navbarlink" Href="dashboard" Match="NavLinkMatch.All" Size="Size.Medium" Style="color: #fffff0;">
                 <span style="margin-right: 8px;"><i class="fa-solid fa-bars"></i></span> Home
             </MudNavLink>
         </div>
         <div class="nav-item">
-            <MudNavLink id="navbarlink" Href="miners" Match="NavLinkMatch.Prefix" Size="Size.Medium">
+            <MudNavLink id="navbarlink" Href="miners" Match="NavLinkMatch.Prefix" Size="Size.Medium" Style="color: #fffff0;">
                 <span style="margin-right: 8px;"><i class="fa-solid fa-network-wired"></i></span> Maintenance
             </MudNavLink>
         </div>
         <div class="nav-item">
-            <MudNavLink id="navbarlink" Href="metrics" Match="NavLinkMatch.All" Size="Size.Medium" Style="color: #ffffff;">
+            <MudNavLink id="navbarlink" Href="metrics" Match="NavLinkMatch.All" Size="Size.Medium" Style="color: #FFFFF0;">
                 <span style="margin-right: 8px;"><i class="fa-solid fa-microchip"></i></span> Metriken
             </MudNavLink>
         </div>
@@ -24,7 +24,7 @@
         flex-direction: column;
         align-items: center;
         background-color: #211f26 !important;
-        color: white !important;
+        color: #FFFFF0 !important;
         border-radius: 10px;
         padding: 10px; /* Adjust the padding as needed */
     }
@@ -32,15 +32,21 @@
     .nav-item {
         width: 50%;
         text-align: center;
-        margin-bottom: 8px; /* Add margin between nav items if needed */
+        margin-bottom: 15px; /* Add margin between nav items if needed */
+        font-size: 145%;
     }
 
     /* Rahmen rund um die Navbar Items */
     .mud-navmenu.mud-navmenu-default .mud-nav-link.active:not(.mud-nav-link-disabled) {
-        color: white !important;
+        color: #FFFFF0 !important;
         background-image: linear-gradient(180deg, #211f26 50%, #B72626 100%);
         border-radius: 40px;
         margin-top: -5px;
         margin-bottom: -5px;
+    }
+
+    .mud-nav-link-text
+    {
+        width: 50%;
     }
 </style>

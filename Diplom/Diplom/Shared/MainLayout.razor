@@ -7,7 +7,7 @@
 <MudLayout>
     <MudDrawer id="navbar" @bind-Open="_drawerOpen" Elevation="1" Width="500px" style=" align-items: center; justify-content: center;">
         <MudDrawerHeader style="align-items: center; justify-content: center;">
-            <MudText Style="font-size: 400%; color: white;l" Typo="Typo.h6">GCM</MudText>
+            <MudText Style="font-size: 400%; color: #FFFFF0;" Typo="Typo.h6">GCM</MudText>
         </MudDrawerHeader>
         <div class="nav">
             <NavMenu />
@@ -15,9 +15,9 @@
         
         <div class="section">
             <div class="usersettings">
-                <a onclick="handleIconClick()">
-                    <i class="fa-solid fa-gear" ></i>
-                </a>
+                <MudNavLink id="navbarlink" Href="usersettings" Match="NavLinkMatch.All">
+                    <i class="fa-solid fa-gear"></i>
+                </MudNavLink>
             </div>
             <div class="dots">
                 <span class="dot">
@@ -38,17 +38,30 @@
 
 <style>
 
+    #navbarlink
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .mud-drawer
     {
         background-color: #211f26;
+        overflow: hidden;
     }
 
     .usersettings
     {
-        display: flex;
-        align-items: flex-end;
         z-index: 2;
     }
+
+    .fa-gear
+    {
+        color: #FFFFF0;
+        font-size: 3em;
+        margin-bottom: 10px;
+    }
+
     .nav
     {
         align-content: center;
@@ -56,10 +69,10 @@
     }
 
     .section {
+        display: flex;
+        align-items: flex-end;
         flex: 1;
         overflow: hidden;
-        box-sizing: border-box;
-        text-align: start;
         position: relative;
         padding-right: 242px;
         padding-left: 242px;
@@ -68,29 +81,29 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #bbb;
+        background-color: #FFFFF0;
         border-radius: 50%;
         display: inline-block;
         position: absolute;
     }
 
-        /* Styles for the first dot */
-        .dot:nth-child(1) {
-            height: 442px;
-            width: 442px;
-            background-color: #B72626;
-            bottom: -10%; /* Position in the vertical center of the first section */
-            left: -25%; /* Position in the horizontal center of the first section */
-        }
+    /* Styles for the first dot */
+    .dot:nth-child(1) {
+        height: 442px;
+        width: 442px;
+        background-color: #B72626;
+        bottom: -10%; /* Position in the vertical center of the first section */
+        left: -25%; /* Position in the horizontal center of the first section */
+    }
 
-        /* Styles for the second dot */
-        .dot:nth-child(2) {
-            height: 335px;
-            width: 335px;
-            background-color: #A72525;
-            bottom: -15%; /* Position in the vertical center of the first section */
-            left: 40%; /* Position in the horizontal center of the first section */
-            z-index: 1; /* Ensure the second dot is above the first */
+    /* Styles for the second dot */
+    .dot:nth-child(2) {
+        height: 335px;
+        width: 335px;
+        background-color: #A72525;
+        bottom: -15%; /* Position in the vertical center of the first section */
+        left: 40%; /* Position in the horizontal center of the first section */
+        z-index: 1; /* Ensure the second dot is above the first */
         }
 </style>
 
