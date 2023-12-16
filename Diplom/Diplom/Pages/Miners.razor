@@ -1,7 +1,134 @@
 ﻿@page "/miners"
 
-<h3>Miners</h3>
 
-@code {
+<div class="container">
+    <h1>Miners</h1>
+    <div class="grid">
+        <div class="left">
+            @foreach (Miner s in miners)
+            {
+                <MudCard class="custom-dark-card">
+                    <MudCardHeader class="custom-dark-card-header">
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6" class="custom-dark-card-text">Group: @s.group </MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent class="custom-dark-card-body">
+                        <MudText class="custom-dark-card-text">IP Address: @s.ip</MudText>
+                        <MudText Style="visibility:hidden">@s.id</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <input type="checkbox" class="custom-control-input" id="checkbox1">
+                    </MudCardActions>
+                </MudCard>
+            }
+        </div>
+        <div class="right">
+            <div class="button-container">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large">Add New</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large">Delete</MudButton>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<style>
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Optional: add spacing between buttons */
+    }
+    .custom-dark-card {
+        width: 75%;
+        background-color: #2B2930;
+        border: solid 2px #EADDFF;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .custom-dark-card-header {
+        background-color: #2B2930;
+        color: #EADDFF;
+        padding: 8px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .custom-dark-card-body {
+        padding: 10px;
+    }
+
+    .custom-dark-card-text {
+        color: #EADDFF;
+    }
+
+
+    html, body {
+        height: 100%;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+        gap: 150px;
+        min-height: 75vh; /* Set min-height to 100% of viewport height */
+    }
+
+    .left {
+        overflow-y: auto; /* Enable vertical scrolling for the left column */
+        max-height: 75vh; /* Set a maximum height for the left column */
+    }
+
+    .right {
+        display: flex;
+        flex-direction: column; /* Ensure buttons stack vertically */
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+
+
+
+    .container {
+        margin-top: -140px;
+    }
+
+    h1 {
+        margin-bottom: 100px;
+    }
+
+    .ipcard {
+        margin-bottom: 50px;
+    }
+</style>
+
+@code
+{
+    List<Miner> miners = new List<Miner>
+{
+    new Miner("192.168.0.1", "Haus", 1),
+    new Miner("192.168.0.2", "Another Location", 2),
+    new Miner("192.168.0.3", "Haus", 3),
+    new Miner("192.168.0.4", "Another Location", 4),
+    new Miner("192.168.0.5", "Haus", 5),
+    new Miner("192.168.0.6", "Another Location", 6),
+    new Miner("192.168.0.7", "Haus", 7),
+    new Miner("192.168.0.8", "Another Location", 8),
+};
+
+    public class Miner
+    {
+        public string ip;
+        public string group;
+        public int id;
+
+        public Miner(string ip, string group, int id)
+        {
+            this.ip = ip;
+            this.group = group;
+            this.id = id;
+        }
+    }
 }
