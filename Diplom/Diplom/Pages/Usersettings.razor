@@ -1,6 +1,133 @@
 ﻿@page "/usersettings"
-<h3>Usersettings</h3>
 
-@code {
+<header class="full-width-header">
+    <div class="header-content">
+        <img src="icon.jpg" alt="Your Image" class="header-image">
+        <div class="header-text">
+            <h1>Alessandro</h1>
+            <h2>Ui Personalisierung</h2>
+        </div>
+    </div>
+</header>
 
-}
+<div class="parent">
+    <div class="left">
+        <div class="item div1">1</div>
+        <div class="item div2">2</div>
+        <div class="item div3">3</div>
+        <div class="item div4">4</div>
+    </div>
+    <div class="right">
+        <div class="item div5">5</div>
+        <div class="item div6">6</div>
+        <div class="item div7">7</div>
+        <div class="item div8">8</div>
+    </div>
+</div>
+
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    h1
+    {
+        margin-bottom: 30px;
+    }
+
+    .mud-container.mud-container-maxwidth-lg.my-16.pt-16 {
+        margin: 0px !important;
+        padding: 0px !important;
+        max-width: none !important; /* Remove max-width limitation */
+        width: 100%; /* Set width to 100% */
+    }
+
+    .mud-main-content {
+        padding-top: 0px !important;
+    }
+
+    .full-width-header {
+        background-color: #1D1B20;
+        color: #fff;
+        text-align: center;
+        padding: 40px;
+        width: 111%;
+    }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .header-image {
+        width: 125px;
+        height: 125px;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+
+    .header-text {
+        color: #fff;
+        align-content: center;
+    }
+
+    .parent {
+        margin: 50px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-column-gap: 50px;
+    }
+
+    .item {
+        padding: 50px;
+        margin: 40px;
+    }
+
+    .left {
+    }
+
+    .right {
+    }
+
+    .div1 {
+        grid-area: 1 / 1 / 2 / 2;
+        background-color: #ddd;
+    }
+
+    .div2 {
+        grid-area: 2 / 1 / 3 / 2;
+        background-color: #ccc;
+    }
+
+    .div3 {
+        grid-area: 3 / 1 / 4 / 2;
+        background-color: #bbb;
+    }
+
+    .div4 {
+        grid-area: 4 / 1 / 5 / 2;
+        background-color: #aaa;
+    }
+
+    .div5 {
+        grid-area: 4 / 2 / 5 / 3;
+        background-color: #999;
+    }
+
+    .div6 {
+        grid-area: 3 / 2 / 4 / 3;
+        background-color: #888;
+    }
+
+    .div7 {
+        grid-area: 2 / 2 / 3 / 3;
+        background-color: #777;
+    }
+
+    .div8 {
+        grid-area: 1 / 2 / 2 / 3;
+        background-color: #666;
+    }
+</style>
