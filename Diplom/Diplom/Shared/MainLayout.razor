@@ -91,7 +91,7 @@
     .dot:nth-child(1) {
         height: 442px;
         width: 442px;
-        background-color: #B72626;
+        background-color: @dotColor1;
         bottom: -10%; /* Position in the vertical center of the first section */
         left: -25%; /* Position in the horizontal center of the first section */
     }
@@ -100,7 +100,7 @@
     .dot:nth-child(2) {
         height: 335px;
         width: 335px;
-        background-color: #A72525;
+        background-color: @dotColor2;
         bottom: -15%; /* Position in the vertical center of the first section */
         left: 40%; /* Position in the horizontal center of the first section */
         z-index: 1; /* Ensure the second dot is above the first */
@@ -110,5 +110,37 @@
 @code {
     // benötigt um Navbar offen zu haben
     bool _drawerOpen = true;
+    // Example usage:
+
+    string dotColor1 = "#B72626";
+    string dotColor2 = "#A72525";
+
+    void SubtractRGB(string hexColor)
+    {
+
+        string filePath = "color.txt";
+
+        try
+        {
+            string content = File.ReadAllText(filePath);
+
+            var color = System.Drawing.ColorTranslator.FromHtml(hexColor);
+
+            // Subtract RGB components
+            int newRed = Math.Max(0, color.R - 16);
+            int newGreen = Math.Max(0, color.G - 1);
+            int newBlue = Math.Max(0, color.B - 1);
+
+            // Convert back to hex string
+            string modifiedHex = $"#{newRed:X2}{newGreen:X2}{newBlue:X2}";
+
+            dotColor2 = modifiedHex;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error reading file: " + ex.Message);
+        }
+    }
 
 }

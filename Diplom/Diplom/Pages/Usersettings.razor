@@ -1,38 +1,322 @@
 ﻿@page "/usersettings"
-
-<header class="full-width-header">
+<div class="full-width-header">
     <div class="header-content">
-        <img src="icon.jpg" alt="Your Image" class="header-image">
+        <label class="image clickable-image" @onclick="OpenFileExplorer">
+            <InputFile style="display: none;" OnChange="HandleFileChange" accept="image/*" />
+            <img src="@imageUrl" alt="Your Image" class="header-image" />
+        </label>
         <div class="header-text">
-            <h1>Alessandro</h1>
-            <h2>Ui Personalisierung</h2>
+            <h1 class="name">Alessandro</h1>
+            <h2>UI Personalisierung</h2>
         </div>
-    </div>
-</header>
-
-<div class="parent">
-    <div class="left">
-        <div class="item div1">1</div>
-        <div class="item div2">2</div>
-        <div class="item div3">3</div>
-        <div class="item div4">4</div>
-    </div>
-    <div class="right">
-        <div class="item div5">5</div>
-        <div class="item div6">6</div>
-        <div class="item div7">7</div>
-        <div class="item div8">8</div>
     </div>
 </div>
 
+
+<div class="parent">
+    <div class="left">
+        <div class="item div1">
+            <h1 class="title">Strompreis</h1>
+
+            <div class="md-textfield">
+                <input type="text" class="my-textfield" required placeholder="">
+                <label for="my-textfield">Cent / kWh</label>
+                <p>Aktuell zu bezahlender Strompreis</p>
+            </div>
+
+            <hr class="seperator" />
+        </div>
+        <div class="item div2">
+            <h1 class="title">TbD</h1>
+
+            <div class="tbd">
+
+            </div>
+            <hr class="seperator" />
+        </div>
+        <div class="item div3">
+            <h1 class="title">TbD</h1>
+            <div class="tbd">
+            </div>
+        </div>
+    </div>
+    <div class="div9">
+        <hr class="vertical" />
+    </div>
+    <div class="right">
+        <div class="item div5">
+            <h1 class="title">UI</h1>
+
+            <div class="colorpicker-card">
+                <p>Click here to activate Color Picker</p>
+                <div class="colored-square">
+                    <input type="color" class="colorpicker-square" onchange="handleColorChange(this.value)" value="#B72626">
+                </div>
+            </div>
+
+            <hr class="seperator" />
+        </div>
+        <div class="item div6">
+            <h1 class="title">Theme Switcher</h1>
+            <div class="theme">
+                <div class="mydict">
+                    <div>
+                        <label>
+                            <input type="radio" name="radio" checked="">
+                            <span>Light Theme</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="radio">
+                            <span>Dark Theme</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private string imageUrl = "icon.jpg";
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            // Process the file as needed
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.OpenReadStream().CopyToAsync(memoryStream);
+                imageUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+            }
+        }
+    }
+
+    private async Task OpenFileExplorer()
+    {
+        try
+        {
+            // Wait for a short delay
+            await Task.Delay(100);
+
+            // Trigger the file input click event
+            await JSRuntime.InvokeVoidAsync("openFileExplorer");
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception as needed
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}
+
+<script>
+    function openFileExplorer() {
+        document.querySelector('input[type="file"]').click();
+    }
+</script>
+
 <style>
+    .name
+    {
+        margin-left: 10px;
+        font-size: 40px;
+    }
+
+    .clickable-image {
+        cursor: pointer;
+    }
+
+    :focus {
+        outline: 0;
+        border-color: #B72626;
+        box-shadow: 0 0 0 4px #211F26;
+    }
+
+    .mydict div {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+        justify-content: center;
+    }
+
+    .mydict input[type="radio"] {
+        clip: rect(0 0 0 0);
+        clip-path: inset(100%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+
+        .mydict input[type="radio"]:checked + span {
+            box-shadow: 0 0 0 0.0625em #B72626;
+            background-color: #4A4458;
+            z-index: 1;
+            color: #FFFFF0;
+        }
+
+    label span {
+        display: block;
+        cursor: pointer;
+        background-color: #211F26;
+        padding: 0.375em .75em;
+        position: relative;
+        margin-left: .0625em;
+        box-shadow: 0 0 0 0.0625em #211F26;
+        letter-spacing: .05em;
+        color: #FFFFF0;
+        text-align: center;
+        transition: background-color .5s ease;
+    }
+
+    label:first-child span {
+        border-radius: .375em 0 0 .375em;
+    }
+
+    label:last-child span {
+        border-radius: 0 .375em .375em 0;
+    }
+
+    .theme
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 5px;
+        background-color: #36343B;
+        padding: 50px;
+        margin-bottom: 24px;
+    }
+
+    .tbd
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 5px;
+        background-color: #36343B;
+        padding: 60px;
+        margin-bottom: 24px;
+    }
+
+    .colorpicker-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 5px;
+        background-color: #36343B;
+        padding: 30px;
+        margin-bottom: 24px;
+    }
+
+    .colored-square {
+      width: 64px;
+      height: 64px;
+      background-color: #FFFFF0; /* Set your desired color */
+      cursor: pointer;
+      margin: 20px;
+      border-radius: 10px;
+      border: solid 2px black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+        }
+
+    .colorpicker-square {
+        width: 50px;
+        height: 50px;
+    }
+
+    .seperator
+    {
+        background-color: #CAC4D0;
+        height: 1px;
+    }
+
+    .title
+    {
+        display: inline-block;
+        border-bottom: solid 1px #FFFFF0;
+    }
+
+    .my-textfield {
+        background-color: #36343B;
+        color: #FFFFF0;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    .additional-text {
+        font-size: 14px;
+        color: #757575;
+    }
+
+    .md-textfield {
+        position: relative;
+        width: 400px;
+        margin-bottom: 24px;
+        color: #FFFFF0;
+    }
+
+    .md-textfield label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 2px;
+        font-size: 16px;
+        color: #757575;
+        transform-origin: 0 0;
+        transition: transform 0.2s ease-out, color 0.2s ease-out;
+    }
+
+    .md-textfield input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+        outline: none; 
+    }
+
+    .md-textfield input:focus {
+        border-bottom: 2px solid #2196F3;
+    }
+
+    .md-textfield input:valid + label,
+    .md-textfield input:focus + label {
+        transform: translateY(-24px) scale(0.8);
+        color: #2196F3;
+    }
+
     body {
         overflow: hidden;
     }
 
-    h1
-    {
+    h1 {
         margin-bottom: 30px;
+    }
+
+    hr.vertical {
+        width: 1px;
+        height: 675px;
+        background-color: white;
+        display: block;
+        margin: 0 auto;
+        margin-top: 50px;
     }
 
     .mud-container.mud-container-maxwidth-lg.my-16.pt-16 {
@@ -74,15 +358,18 @@
 
     .parent {
         margin: 50px;
+        margin-top: 0px;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 0.1fr 1fr;
         grid-template-rows: repeat(4, 1fr);
         grid-column-gap: 50px;
     }
 
     .item {
-        padding: 50px;
-        margin: 40px;
+        padding-bottom: 0px;
+        padding-left: 0px;
+        padding-top: 25px;
+        margin: 30px;
     }
 
     .left {
@@ -92,42 +379,28 @@
     }
 
     .div1 {
-        grid-area: 1 / 1 / 2 / 2;
-        background-color: #ddd;
+        grid-row: 1 / 2;
     }
 
     .div2 {
-        grid-area: 2 / 1 / 3 / 2;
-        background-color: #ccc;
+        grid-row: 2 / 3;
     }
 
     .div3 {
-        grid-area: 3 / 1 / 4 / 2;
-        background-color: #bbb;
-    }
-
-    .div4 {
-        grid-area: 4 / 1 / 5 / 2;
-        background-color: #aaa;
+        grid-row: 3 / 4;
     }
 
     .div5 {
-        grid-area: 4 / 2 / 5 / 3;
-        background-color: #999;
+        grid-row: 5 / 6;
     }
 
     .div6 {
-        grid-area: 3 / 2 / 4 / 3;
-        background-color: #888;
+        grid-row: 6 / 7;
     }
 
-    .div7 {
-        grid-area: 2 / 2 / 3 / 3;
-        background-color: #777;
-    }
-
-    .div8 {
-        grid-area: 1 / 2 / 2 / 3;
-        background-color: #666;
+    .div9 {
+        grid-area: 1 / 2 / 6 / 3;
+        align-content: center;
+        justify-content: center;
     }
 </style>

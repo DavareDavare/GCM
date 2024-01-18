@@ -67,4 +67,32 @@
         }
     }
 
+    function changeImage() {
+        // Assuming there's an input element with type="file" for image selection
+        var inputElement = document.createElement('input');
+        inputElement.type = 'file';
+
+        // Trigger a click event on the input element to open the file dialog
+        inputElement.click();
+
+        // Listen for the change event when a file is selected
+        inputElement.addEventListener('change', function () {
+            var file = inputElement.files[0];
+
+            if (file) {
+                // Assuming there's an img element with class "header-image" for displaying the selected image
+                var imageElement = document.querySelector('.header-image');
+
+                // Set the source of the image to the selected file
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imageElement.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+
+
 </script>
