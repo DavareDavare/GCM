@@ -1,0 +1,97 @@
+/*
+  Author: Sarah Hagenhofer
+  Lastly edited: 14.01.2023
+  Comment: Styling sheet for the GCM Mobile-app / colours and layout mostly based on the already created Figma-prototypes
+*/
+
+body{
+    background-color: #141218;
+}
+
+#headline{
+    margin-top: 5%;
+}
+
+#title{
+    color: white;
+    font-size: 25px;
+    font-weight: 400;
+    word-wrap: break-word;
+    padding-left: 2px;
+}
+
+#all{
+    background-color: #B72626;
+    border-radius: 100px;
+    border-color: white;
+    color: white;
+    width: 110px;
+}
+
+#settings{
+    background-color: #B72626;
+    border-radius: 100px;
+    border-color: white;
+    color: white;
+    width: 110px;
+}
+
+#seperator{
+    color: white;
+    border: 1px solid white;
+    opacity: 100;
+}
+
+#middle{
+    height: 80vh;
+    margin-bottom: 5%;
+}
+
+#rate{
+    background-color: #2B2930;
+    color: white;
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 24px;
+    padding-top: 5%;
+    border: solid 1px white;
+    
+}
+
+#hash{
+    background-color: #2B2930;
+    color: white;
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 24px;
+    padding-top: 5%;
+    border: solid 1px white;
+}
+
+#niederschlag{
+    background-color: #2B2930;
+    color: white;
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 24px;
+    padding-top: 5%;
+    border: solid 1px white;
+}
+
+#card{
+    background-color: #2B2930;
+    color: white;
+    border: solid 1px white;
+    border-radius: 24px;
+    align-content: center;
+    padding: 10%;
+}
+
+#middletop{
+    height: 26vh;
+    margin-bottom: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}

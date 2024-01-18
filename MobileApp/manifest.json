@@ -1,0 +1,10 @@
+{
+    "name": "Green Crypto Mining",
+    "short_name": "GCM",
+    "theme_color": "#3b454d",
+    "background_color": "#3b454d",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/"
+  }
