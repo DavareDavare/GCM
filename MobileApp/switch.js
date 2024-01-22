@@ -9,6 +9,9 @@ var statusRate = 0;
 var statusHash = 0;
 var statusniederschlag = 0;
 
+//variable for the accent colour
+var colourpick = '#B72626';
+
 
 function switchRate(){
   
@@ -155,7 +158,7 @@ function switchNiederschlag(){
 
     //creates a new table with the weather data / existing error: only a placeholder up until now, yet to be filled with real weather data
     let divclass = document.getElementById('AktuellerNiederschlag');
-    divclass.innerHTML = '<table id="showweather"><thead><th>One</th><th>Two</th><th>Three</th></thead><tbody><tr><td>Yes</td><td>No</td><td>Maybe</td></tr></tbody></table>';
+    divclass.innerHTML = '<table id="showweather"><thead><th>Morning</th><th>Afternoon</th><th>Night</th></thead><tbody><tr><td>Yes</td><td>No</td><td>Maybe</td></tr></tbody></table>';
 
     //closes the two other data-sections if opened
     if(statusHash==1){
@@ -178,3 +181,10 @@ function switchNiederschlag(){
   }
 
 }
+
+
+function changecolour(){
+  var colourfield = document.getElementById('colourpicker');
+  colourpick = colourfield.value;
+  document.getElementById('changebutton').style = 'background-color: '+colourpick+';';
+  }

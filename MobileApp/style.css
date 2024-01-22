@@ -20,15 +20,7 @@ body{
     padding-left: 2px;
 }
 
-#all{
-    background-color: #B72626;
-    border-radius: 100px;
-    border-color: white;
-    color: white;
-    width: 110px;
-}
-
-#settings{
+#changebutton{
     background-color: #B72626;
     border-radius: 100px;
     border-color: white;
@@ -92,6 +84,19 @@ body{
     margin-bottom: 5%;
     padding-left: 5%;
     padding-right: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+.piccenter{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    border-radius: 100%;
+}
+#middlesettings{
+    height: 80vh;
+    margin-bottom: 5%;
     padding-top: 5%;
     padding-bottom: 5%;
 }
