@@ -115,6 +115,14 @@
     }
 }
 
+@{
+    bool useDarkTheme = false;
+    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#EBE3D5";
+    string themeCardColor = useDarkTheme ? "#36343B" : "#F3EEEA";
+    string themeIconBarColor = useDarkTheme ? "#E4DDCF" : "#E8DECD";
+    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+}
+
 <script>
     function openFileExplorer() {
         document.querySelector('input[type="file"]').click();
@@ -122,9 +130,14 @@
 </script>
 
 <style>
+
+    body
+    {
+        background-color: @themeBackgroundColor !important;
+    }
     .name
     {
-        margin-left: 10px;
+        margin-left:  10px;
         font-size: 40px;
     }
 
@@ -135,7 +148,7 @@
     :focus {
         outline: 0;
         border-color: #B72626;
-        box-shadow: 0 0 0 4px #211F26;
+        box-shadow: 0 0 0 4px @themeBackgroundColor;
     }
 
     .mydict div {
@@ -155,23 +168,23 @@
         width: 1px;
     }
 
-        .mydict input[type="radio"]:checked + span {
-            box-shadow: 0 0 0 0.0625em #B72626;
-            background-color: #4A4458;
-            z-index: 1;
-            color: #FFFFF0;
-        }
+    .mydict input[type="radio"]:checked + span {
+        box-shadow: 0 0 0 0.0625em #B72626;
+        background-color: @themeIconBarColor;
+        z-index: 1;
+        color: #FFFFF0;
+    }
 
     label span {
         display: block;
         cursor: pointer;
-        background-color: #211F26;
+        background-color: @themeBackgroundColor;
         padding: 0.375em .75em;
         position: relative;
         margin-left: .0625em;
-        box-shadow: 0 0 0 0.0625em #211F26;
+        box-shadow: 0 0 0 0.0625em @themeBackgroundColor;
         letter-spacing: .05em;
-        color: #FFFFF0;
+        color: @themeTextColor;
         text-align: center;
         transition: background-color .5s ease;
     }
@@ -192,7 +205,7 @@
         align-items: center;
         text-align: center;
         border-radius: 5px;
-        background-color: #36343B;
+        background-color: @themeCardColor;
         padding: 50px;
         margin-bottom: 24px;
     }
@@ -205,7 +218,7 @@
         align-items: center;
         text-align: center;
         border-radius: 5px;
-        background-color: #36343B;
+        background-color: @themeCardColor;
         padding: 60px;
         margin-bottom: 24px;
     }
@@ -217,7 +230,7 @@
         align-items: center;
         text-align: center;
         border-radius: 5px;
-        background-color: #36343B;
+        background-color: @themeCardColor;
         padding: 30px;
         margin-bottom: 24px;
     }
@@ -244,19 +257,19 @@
 
     .seperator
     {
-        background-color: #CAC4D0;
+        background-color: @themeTextColor;
         height: 1px;
     }
 
     .title
     {
         display: inline-block;
-        border-bottom: solid 1px #FFFFF0;
+        border-bottom: solid 1px @themeTextColor;
     }
 
     .my-textfield {
-        background-color: #36343B;
-        color: #FFFFF0;
+        background-color: @themeCardColor;
+        color: @themeTextColor;
         border-radius: 5px 5px 0px 0px;
     }
 
@@ -269,7 +282,7 @@
         position: relative;
         width: 400px;
         margin-bottom: 24px;
-        color: #FFFFF0;
+        color: @themeTextColor;
     }
 
     .md-textfield label {
@@ -288,22 +301,23 @@
         padding: 12px;
         font-size: 16px;
         border: none;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid @themeTextColor;
         outline: none; 
     }
 
     .md-textfield input:focus {
-        border-bottom: 2px solid #2196F3;
+        border-bottom: 2px solid #B72626;
     }
 
     .md-textfield input:valid + label,
     .md-textfield input:focus + label {
         transform: translateY(-24px) scale(0.8);
-        color: #2196F3;
+        color: #B72626;
     }
 
     body {
         overflow: hidden;
+        color: @themeTextColor !important;
     }
 
     h1 {
@@ -331,11 +345,13 @@
     }
 
     .full-width-header {
-        background-color: #1D1B20;
-        color: #fff;
+        background-color: @themeIconBarColor;
+        color: @themeTextColor;
         text-align: center;
         padding: 40px;
         width: 111%;
+        -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+        box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
     }
 
     .header-content {
@@ -352,7 +368,7 @@
     }
 
     .header-text {
-        color: #fff;
+        color: @themeTextColor;
         align-content: center;
     }
 

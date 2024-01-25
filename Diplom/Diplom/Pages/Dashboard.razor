@@ -24,11 +24,22 @@
     </div>
 </div>
 
+
+
+@{
+    bool useDarkTheme = false;
+    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#EBE3D5";
+    string themeCardColor = useDarkTheme ? "#2B2930" : "#F3EEEA";
+    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+}
+
+
 <style>
 
     body{
         overflow: hidden;
-        color: #FFFFF0;
+        color: @themeTextColor !important;
+        background-color: @themeBackgroundColor !important;
     }
 
     .grid-container {
@@ -59,12 +70,23 @@
     }
 
     .griditem {
-        background-color: #2B2930;
-        border: solid 2px #EADDFF;
+        background-color: @themeCardColor;
         border-radius: 25px;
         position: relative;
         align-items: center;
         justify-content: center;
+    @{
+        if (useDarkTheme == true)
+        {
+            <text>border: solid 2px #EADDFF</text>
+        }
+        else
+        {
+            <text>-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+                box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+            </text>
+        }
+    }
     }
 
     .editable {

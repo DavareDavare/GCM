@@ -7,7 +7,7 @@
 <MudLayout>
     <MudDrawer id="navbar" @bind-Open="_drawerOpen" Elevation="1" Width="500px" style=" align-items: center; justify-content: center;">
         <MudDrawerHeader style="align-items: center; justify-content: center;">
-            <MudText Style="font-size: 400%; color: #FFFFF0;" Typo="Typo.h6">GCM</MudText>
+            <MudText Style="font-size: 400%; color: #fffff0" Typo="Typo.h6">GCM</MudText>
         </MudDrawerHeader>
         <div class="nav">
             <NavMenu />
@@ -36,20 +36,30 @@
     </MudMainContent>
 </MudLayout>
 
-<style>
+@{
+    bool useDarkTheme = false;
+    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#dbd4c6";
+    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+}
 
-    #navbarlink
-    {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+<style>
     .mud-drawer
     {
-        background-color: #211f26;
+        /*Hintergrund Farbe für Navbar*/
+        background-color: @themeBackgroundColor;
         overflow: hidden;
+    @{
+        if(useDarkTheme == false)
+        {
+            <text>-webkit-box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.5);
+                box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.5);
+            </text>
+        }
+        }
+        
     }
 
+    /*User Settings Rad*/
     .usersettings
     {
         z-index: 2;
@@ -62,12 +72,13 @@
         margin-bottom: 10px;
     }
 
-    .nav
-    {
-        align-content: center;
-        background-color: #211f26;
+    #navbarlink {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
+    /*Bereich unter Nav Items*/
     .section {
         display: flex;
         align-items: flex-end;
@@ -81,7 +92,6 @@
     .dot {
         height: 25px;
         width: 25px;
-        background-color: #FFFFF0;
         border-radius: 50%;
         display: inline-block;
         position: absolute;

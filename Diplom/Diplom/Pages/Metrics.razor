@@ -1,1 +1,85 @@
 ﻿@page "/metrics"
+
+<div class="grid-container">
+    <div class="griditem top-left">
+
+    </div>
+    <div class="griditem top-right">
+
+    </div>
+    <div class="griditem bottom-left">
+
+    </div>
+    <div class="griditem bottom-right">
+    </div>
+</div>
+
+@{
+    bool useDarkTheme = false;
+    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#EBE3D5";
+    string themeCardColor = useDarkTheme ? "#2B2930" : "#F3EEEA";
+    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+}
+
+<style>
+
+    body
+    {
+        overflow: hidden;
+    }
+    .grid-container {
+        margin-top: -150px;
+        margin-right: 100px;
+        margin-left: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns with equal width */
+        grid-template-rows: 1fr 1fr; /* Two rows with equal height */
+        gap: 125px;
+    }
+
+    .top-left {
+        height: 400px;
+        padding: 10px;
+        position: relative;
+    }
+
+    .top-right {
+        height: 400px;
+        padding: 10px;
+    }
+
+    .bottom-left {
+        padding: 10px;
+        height: 400px;
+    }
+
+    .bottom-right {
+        padding: 10px;
+        height: 400px;
+    }
+
+    .griditem {
+        background-color: @themeCardColor;
+        border-radius: 25px;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    @{
+        if (useDarkTheme == true)
+        {
+            <text>border: solid 2px #EADDFF</text>
+        }
+        else
+        {
+            <text>-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+                box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+            </text>
+        }
+    }
+    }
+
+    body
+    {
+        background-color: @themeBackgroundColor !important;
+    }
+</style>
