@@ -14,6 +14,9 @@
                     </MudCardHeader>
                     <MudCardContent class="custom-dark-card-body">
                         <MudText class="custom-dark-card-text">IP Address: @miner.Ip</MudText>
+                        <MudText class="custom-dark-card-text">Username: @miner.AdminName</MudText>
+                        <MudText class="custom-dark-card-text">Password: @miner.AdminPassword</MudText>
+                        <MudText class="custom-dark-card-text">Current Hashrate: @miner.Hashrate</MudText>
                         <MudText Style="visibility:hidden">@miner.Id</MudText>
                     </MudCardContent>
                     <MudCardActions>
@@ -26,6 +29,7 @@
             <div class="button-container">
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" @onclick="AddMiner">Add New</MudButton>
                 <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Large" @onclick="DeleteMiners">Delete</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Success" Size="Size.Large" @onclick="EditHashrate">Edit Miner</MudButton>
             </div>
         </div>
     </div>
@@ -33,49 +37,119 @@
 
 @if (showAddMinerDialog)
 {
-    <div class="modal-container">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Add New Miner</h3>
-                <button class="close-button" @onclick="CancelAddMiner">X</button>
-            </div>
-            <div class="modal-body">
-                <div class="input">
-                    <p>Miner IP:</p>
-                    <MudTextField @bind-Value="newMinerIp" />
+        <div class="modal-container">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Add New Miner</h3>
+                    <button class="close-button" @onclick="CancelAddMiner">X</button>
                 </div>
-                <div class="input">
-                    <p>Miner Group:</p>
-                    <MudTextField @bind-Value="newMinerGroup" />
-                </div>
+                <div class="modal-body">
+                    <div class="input">
+                        <p>Miner IP:</p>
+                        <MudTextField @bind-Value="newMinerIp" />
+                    </div>
+                    <div class="input">
+                        <p>Miner Group:</p>
+                        <MudTextField @bind-Value="newMinerGroup" />
+                    </div>
+                    <div class="input">
+                        <p>Admin User:</p>
+                        <MudTextField @bind-Value="newMinerUsername" />
+                    </div>
+                    <div class="input">
+                        <p>Admin Password:</p>
+                        <MudTextField @bind-Value="newMinerPassword" />
+                    </div>
 
-            </div>
-            <div class="modal-footer">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SaveMiner">Save</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="CancelAddMiner">Cancel</MudButton>
+                </div>
+                <div class="modal-footer">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SaveMiner">Save</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="CancelAddMiner">Cancel</MudButton>
+                </div>
             </div>
         </div>
-    </div>
 }
 
+@if (showEditHashrateDialog)
+{
+    var selectedMiners = miners.Where(m => m.IsChecked).ToList();
+    if (selectedMiners.Count == 0)
+    {
+        <div class="modal-container">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Edit Hashrate</h3>
+                    <button class="close-button" @onclick="CancelEditHashrate">X</button>
+                </div>
+                <div class="modal-body">
+                    <p>No Miners selected...</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="modal-container">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Edit Hashrate</h3>
+                    <button class="close-button" @onclick="CancelEditHashrate">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="input">
+                        <p>New Hashrate:</p>
+                        <MudNumericField @bind-Value="newHashrate" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="SaveHashrate">Save</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="CancelEditHashrate">Cancel</MudButton>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@{
+    bool useDarkTheme = true;
+    string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
+    string themeCardColor = useDarkTheme ? "#2B2930" : "#F3EEEA";
+    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+}
 
 @code
 {
-    List<Miner> miners = new List<Miner>
-    {
-        new Miner("192.168.0.1", "Haus", 1),
-        new Miner("192.168.0.2", "Another Location", 2),
-        new Miner("192.168.0.3", "Haus", 3),
-        new Miner("192.168.0.4", "Another Location", 4),
-        new Miner("192.168.0.5", "Haus", 5),
-        new Miner("192.168.0.6", "Another Location", 6),
-        new Miner("192.168.0.7", "Haus", 7),
-        new Miner("192.168.0.8", "Another Location", 8),
-    };
+    private static readonly HttpClient client = new HttpClient();
 
+    List<Miner> miners = new List<Miner>();
+
+    private bool showEditHashrateDialog = false;
     private bool showAddMinerDialog = false;
     private string newMinerIp = "";
     private string newMinerGroup = "";
+    private string newMinerUsername = "";
+    private string newMinerPassword = "";
+    private float newHashrate = 0;
+
+    protected override void OnInitialized()
+    {
+        LoadMinersWithDelay();
+    }
+
+    private async Task LoadMinersWithDelay()
+    {
+        miners.Clear();
+        // Call the API to get miners data
+        var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
+        List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
+        miners = minersfromdb;
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(100);
+
+        // Trigger re-render
+        StateHasChanged();
+    }
 
     private void AddMiner()
     {
@@ -85,7 +159,7 @@
     private void SaveMiner()
     {
         // Add a new miner with the provided IP
-        miners.Add(new Miner(newMinerIp, newMinerGroup, miners.Count + 1));
+        miners.Add(new Miner(newMinerIp, newMinerGroup, miners.Count + 1, newMinerUsername, newMinerPassword));
 
         // Close the dialog
         showAddMinerDialog = false;
@@ -97,6 +171,41 @@
         showAddMinerDialog = false;
     }
 
+    private void EditHashrate()
+    {
+        showEditHashrateDialog = true;
+    }
+
+    private async void SaveHashrate()
+    {
+        var hashrate = newHashrate;
+        var selectedMiners = miners.Where(m => m.IsChecked).ToList();
+
+        // Create an anonymous object to represent the structure
+        var payload = new
+        {
+            Hashrate = hashrate,
+            ids = selectedMiners.Select(miner => miner.Id).ToList()
+        };
+
+        // Serialize the object to JSON using Newtonsoft.Json
+        string jsonstring = JsonConvert.SerializeObject(payload);
+
+        Console.WriteLine(jsonstring);
+
+        var response = await client.PutAsync("https://localhost:7294/api/Miner/UpdateHashrate", new StringContent(jsonstring, Encoding.UTF8, "application/json"));
+        showEditHashrateDialog = false;
+
+        LoadMinersWithDelay();
+    }
+
+
+    private void CancelEditHashrate()
+    {
+        showEditHashrateDialog = false;
+    }
+
+
     private void DeleteMiners()
     {
         var selectedMiners = miners.Where(m => m.IsChecked).ToList();
@@ -107,20 +216,6 @@
         }
     }
 
-    public class Miner
-    {
-        public string Ip { get; set; }
-        public string Group { get; set; }
-        public int Id { get; set; }
-        public bool IsChecked { get; set; }
-
-        public Miner(string ip, string group, int id)
-        {
-            Ip = ip;
-            Group = group;
-            Id = id;
-        }
-    }
 }
 
 
@@ -129,17 +224,27 @@
     <!-- Cards für Miner-->
         .custom-dark-card {
             width: 75%;
-            background-color: #2B2930;
-            border: solid 2px #EADDFF;
+            background-color: @themeCardColor;
             border-radius: 8px;
             padding: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            @{
+                if (useDarkTheme == true)
+                {
+                    <text>border: solid 2px #EADDFF</text>
+                }
+                else
+                {
+                    <text>-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+                        box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+                    </text>
+                }
+            }
         }
 
         .custom-dark-card-header {
-            background-color: #2B2930;
-            color: #EADDFF;
+            background-color: @themeCardColor;
+            color:  @themeTextColor;
             padding: 8px;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
@@ -150,12 +255,13 @@
         }
 
         .custom-dark-card-text {
-            color: #EADDFF;
+            color: @themeTextColor;
         }
 
 
     html, body {
         height: 100%;
+        background-color: @themeBackgroundColor;
     }
 
     <!-- Css Grid für Aufteilung Links Miner und Rechts Buttons-->
@@ -184,6 +290,7 @@
 
     h1 {
         margin-bottom: 100px;
+        color: @themeTextColor;
     }
 
     .ipcard {
@@ -204,17 +311,16 @@
     }
 
     .modal {
-        background: #211f26;
-        color: #FFFFF0;
-        border: solid 2px #EADDFF;
+        background: @themeCardColor;
+        color: @themeTextColor;
         padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         width: 800px; /* Adjust the width as needed */
-        height: 450px;
+        height: 600px;
         display: flex;
         flex-direction: column;
         justify-content: space-between; /* Align content with space between */
+        border: solid 2px @themeTextColor;
     }
 
     .modal-footer {
@@ -236,16 +342,16 @@
         border: none;
         cursor: pointer;
         font-size: 16px;
-        color: #FFFFF0;
+        color: @themeTextColor;
     }
 
     .modal-body {
         margin-bottom: 20px;
-        color: #FFFFF0;
+        color: @themeTextColor;
     }
 
     .mud-input{
-        color: #FFFFF0; /* Text color for the input field */
+        color: @themeTextColor;
     }
 
     .input{

@@ -27,8 +27,8 @@
 
 
 @{
-    bool useDarkTheme = false;
-    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#EBE3D5";
+    bool useDarkTheme = true;
+    string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
     string themeCardColor = useDarkTheme ? "#2B2930" : "#F3EEEA";
     string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
 }
@@ -126,12 +126,42 @@
 
 
 @code {
+    private static readonly HttpClient client = new HttpClient();
+
     private int reststromPercentage = 69;
-    private int hashrateValue = 100;
+    private int hashrateValue = 0;
     private int niederschlagPercentage = 42;
 
-    private void UpdateHashrateValue(int newValue)
+    protected override async void OnInitialized()
     {
+        var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
+        List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
+        float sum = 0;
+        foreach(Miner m in minersfromdb)
+        {
+            sum += m.Hashrate;
+        }
+        float hashrateValue = sum / minersfromdb.Count;
+        
+        this.hashrateValue = (int)Math.Ceiling(hashrateValue);
+
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(100);
+
+        // Trigger re-render
+        StateHasChanged();
+    }
+
+    private async void UpdateHashrateValue(int newValue)
+    {
+        var response = await client.PutAsync("https://localhost:7294/api/Miner/UpdateAllHashrates", new StringContent(newValue.ToString(), Encoding.UTF8, "application/json"));
         hashrateValue = newValue;
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(100);
+
+        // Trigger re-render
+        StateHasChanged();
     }
 }

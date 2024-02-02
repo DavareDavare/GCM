@@ -4923,3 +4923,7 @@ C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\x
 C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\d46cik2ice.gz
 C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\b6zqdncqne.gz
 C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\uji5zuu4c3.gz
+C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll
+C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
+C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\biekejujle.gz
