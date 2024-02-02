@@ -1,0 +1,6 @@
+@MinerAPI_HostAddress = http://localhost:5274
+
+GET {{MinerAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
