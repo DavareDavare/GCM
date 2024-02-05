@@ -1,7 +1,7 @@
 {
   "entryAssembly": "Diplom",
   "resources": {
-    "hash": "sha256-ZeNegU7/tDLiG+Ou3X/8CwwG+/d3qsfFPol1Y9Dfzug=",
+    "hash": "sha256-bU1IS3zZbvjaHhDqb2b86I88PLgL2a1KWWMFr7nVjFs=",
     "runtime": {
       "dotnet.6.0.26.6937xck7qy.js": "sha256-q4SPzhRyXlR1HXK6WAbwJRNI6jvBBYUisoHeH0+eRyM=",
       "dotnet.timezones.blat": "sha256-klrDSl9zL0jGM+Fc+fiCLbJ5Z7U2C9fTDn0+NmIH9VY=",
@@ -202,10 +202,10 @@
       "mscorlib.dll": "sha256-s5oSn2ty4Q1q2t/0DWCHXo4ll77GsoYrYe5ExHyAg0o=",
       "netstandard.dll": "sha256-AH9oqzxpl6lGTr9vEnTGTk40WK7IpSuGlKS3dTEC67I=",
       "System.Private.CoreLib.dll": "sha256-ae6NSkrFVtQY8QH8C38+ZYQDBUinD+PjmAf/eE/eVMQ=",
-      "Diplom.dll": "sha256-VbTLxpys4Ea8F0K+G6WedbovtUu+oS/zYHylsFxe+Gc="
+      "Diplom.dll": "sha256-b0hTnfV6PzCe7z/XjsmJEXRQVv/yaLK1l3oZR711czU="
     },
     "pdb": {
-      "Diplom.pdb": "sha256-sa4npBRvuj8WRvRqCnaRGO2yw+VrXmbYjrFnC9OxzjM="
+      "Diplom.pdb": "sha256-JoNv9jK90eCjdIbufK2SbLz+NTHR7BPsnQAUxYedeJ4="
     },
     "runtimeAssets": {
       "dotnet.wasm": {

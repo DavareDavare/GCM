@@ -11,7 +11,15 @@
     <div class="griditem top-right">
         <p>Hashrate</p>
         <p>der Miner</p>
-        <EditableFieldComponent Value="@hashrateValue" ValueChanged="UpdateHashrateValue"/>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="error-message">
+                @errorMessage
+            </div>
+        }else
+        {
+            <EditableFieldComponent Value="@hashrateValue" ValueChanged="UpdateHashrateValue" />
+        }
     </div>
     <div class="griditem bottom-group">
         <div class="upper">
@@ -132,19 +140,28 @@
     private int hashrateValue = 0;
     private int niederschlagPercentage = 42;
 
-    protected override async void OnInitialized()
-    {
-        var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
-        List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
-        float sum = 0;
-        foreach(Miner m in minersfromdb)
-        {
-            sum += m.Hashrate;
-        }
-        float hashrateValue = sum / minersfromdb.Count;
-        
-        this.hashrateValue = (int)Math.Ceiling(hashrateValue);
+    private string errorMessage = "";
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
+            List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
+            float sum = 0;
+            foreach (Miner m in minersfromdb)
+            {
+                sum += m.Hashrate;
+            }
+            float hashrateValue = sum / minersfromdb.Count;
+
+            this.hashrateValue = (int)Math.Ceiling(hashrateValue);
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            errorMessage = $"Error loading miner data: {ex.Message}";
+        }
 
         // Introduce a delay of 1 second (1000 milliseconds)
         await Task.Delay(100);
@@ -155,8 +172,16 @@
 
     private async void UpdateHashrateValue(int newValue)
     {
-        var response = await client.PutAsync("https://localhost:7294/api/Miner/UpdateAllHashrates", new StringContent(newValue.ToString(), Encoding.UTF8, "application/json"));
-        hashrateValue = newValue;
+        try
+        {
+            var response = await client.PutAsync("https://localhost:7294/api/Miner/UpdateAllHashrates", new StringContent(newValue.ToString(), Encoding.UTF8, "application/json"));
+            hashrateValue = newValue;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            errorMessage = $"Error updating hashrate: {ex.Message}";
+        }
 
         // Introduce a delay of 1 second (1000 milliseconds)
         await Task.Delay(100);

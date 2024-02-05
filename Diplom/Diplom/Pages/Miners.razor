@@ -4,6 +4,14 @@
     <h1>Miners</h1>
     <div class="grid">
         <div class="left">
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="error-message">
+                    @errorMessage
+                </div>
+            }
+            else
+            {
             @foreach (Miner miner in miners)
             {
                 <MudCard class="custom-dark-card">
@@ -23,6 +31,7 @@
                         <input type="checkbox" class="custom-control-input" id="@($"checkbox{miner.Id}")" @bind="miner.IsChecked" />
                     </MudCardActions>
                 </MudCard>
+            }
             }
         </div>
         <div class="right">
@@ -130,6 +139,7 @@
     private string newMinerUsername = "";
     private string newMinerPassword = "";
     private float newHashrate = 0;
+    private string errorMessage = null;
 
     protected override void OnInitialized()
     {
@@ -139,10 +149,19 @@
     private async Task LoadMinersWithDelay()
     {
         miners.Clear();
-        // Call the API to get miners data
-        var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
-        List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
-        miners = minersfromdb;
+
+        try
+        {
+            // Call the API to get miners data
+            var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
+            List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
+            miners = minersfromdb;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            errorMessage = $"Error loading miners: {ex.Message}";
+        }
 
         // Introduce a delay of 1 second (1000 milliseconds)
         await Task.Delay(100);
@@ -156,13 +175,16 @@
         showAddMinerDialog = true;
     }
 
-    private void SaveMiner()
+    private async void SaveMiner()
     {
-        // Add a new miner with the provided IP
-        miners.Add(new Miner(newMinerIp, newMinerGroup, miners.Count + 1, newMinerUsername, newMinerPassword));
+        Miner miner = new Miner(newMinerIp, newMinerGroup, miners.Count + 1, newMinerUsername, newMinerPassword);
+        string jsonMiner = JsonConvert.SerializeObject(miner);
+
+        HttpResponseMessage response = await client.PostAsync("https://localhost:7294/api/miner/AddMiner", new StringContent(jsonMiner, Encoding.UTF8, "application/json"));
 
         // Close the dialog
         showAddMinerDialog = false;
+        LoadMinersWithDelay();
     }
 
     private void CancelAddMiner()
@@ -178,25 +200,42 @@
 
     private async void SaveHashrate()
     {
-        var hashrate = newHashrate;
-        var selectedMiners = miners.Where(m => m.IsChecked).ToList();
-
-        // Create an anonymous object to represent the structure
-        var payload = new
+        try
         {
-            Hashrate = hashrate,
-            ids = selectedMiners.Select(miner => miner.Id).ToList()
-        };
+            var hashrate = newHashrate;
+            var selectedMiners = miners.Where(m => m.IsChecked).ToList();
 
-        // Serialize the object to JSON using Newtonsoft.Json
-        string jsonstring = JsonConvert.SerializeObject(payload);
+            // Create an anonymous object to represent the structure
+            var payload = new
+            {
+                Hashrate = hashrate,
+                ids = selectedMiners.Select(miner => miner.Id).ToList()
+            };
 
-        Console.WriteLine(jsonstring);
+            // Serialize the object to JSON using Newtonsoft.Json
+            string jsonstring = JsonConvert.SerializeObject(payload);
 
-        var response = await client.PutAsync("https://localhost:7294/api/Miner/UpdateHashrate", new StringContent(jsonstring, Encoding.UTF8, "application/json"));
-        showEditHashrateDialog = false;
+            Console.WriteLine(jsonstring);
 
-        LoadMinersWithDelay();
+            var response = await client.PutAsync("https://localhost:7294/api/Miner/UpdateHashrate", new StringContent(jsonstring, Encoding.UTF8, "application/json"));
+            showEditHashrateDialog = false;
+
+            newMinerIp = "";
+            newMinerGroup = "";
+            newMinerUsername = "";
+            newMinerPassword = "";
+
+            // Reload miners after updating hashrate
+            await LoadMinersWithDelay();
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            errorMessage = $"Error saving hashrate: {ex.Message}";
+        }
+
+        // Trigger re-render
+        StateHasChanged();
     }
 
 
@@ -206,14 +245,27 @@
     }
 
 
-    private void DeleteMiners()
+    private async void DeleteMiners()
     {
         var selectedMiners = miners.Where(m => m.IsChecked).ToList();
 
+        string ids = "[";
         foreach (var miner in selectedMiners)
         {
-            miners.Remove(miner);
+            ids += miner.Id.ToString() + ",";
         }
+        ids = ids.Remove(ids.Length - 1);
+        ids += "]";
+
+        HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = new StringContent(ids, Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri("https://localhost:7294/api/Miner/DeleteMiners")
+            };
+        await client.SendAsync(request);
+
+        LoadMinersWithDelay();
     }
 
 }
