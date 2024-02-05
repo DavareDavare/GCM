@@ -187,4 +187,21 @@ function changecolour(){
   var colourfield = document.getElementById('colourpicker');
   colourpick = colourfield.value;
   document.getElementById('changebutton').style = 'background-color: '+colourpick+';';
-  }
+}
+
+function changestyle(){
+    fetch("themecode.txt")
+      .then((res)=>res.text())
+      .then((text)=>{
+        var x = text;
+        
+          if(x=="light"){
+              FileSystemWritableFileStream
+
+          }
+          else if(x=="dark"){
+
+          }
+      })
+      .catch((e)=>console.error(e));
+}
