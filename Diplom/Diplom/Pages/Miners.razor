@@ -1,4 +1,5 @@
 ﻿@page "/miners"
+@inject ThemeStateService themeStateService;
 
 <div class="container">
     <h1>Miners</h1>
@@ -120,7 +121,7 @@
 }
 
 @{
-    bool useDarkTheme = true;
+    bool useDarkTheme = themeStateService.UseDarkTheme;
     string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
     string themeCardColor = useDarkTheme ? "#2B2930" : "#F3EEEA";
     string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";

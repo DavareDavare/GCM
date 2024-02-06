@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj": {}
+    "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj": {
+    "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+        "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
         "projectName": "Diplom",
-        "projectPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
-        "packagesPath": "C:\\Users\\Davare\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\obj\\",
+        "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+        "packagesPath": "C:\\Users\\DerAn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Davare\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DerAn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -69,7 +69,7 @@
             "Microsoft.NET.Sdk.WebAssembly.Pack": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.1, )",
+              "version": "[8.0.0, )",
               "autoReferenced": true
             },
             "MudBlazor": {
@@ -95,7 +95,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[6.0.26, 6.0.26]"
+              "version": "[6.0.25, 6.0.25]"
             }
           ],
           "frameworkReferences": {
@@ -103,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

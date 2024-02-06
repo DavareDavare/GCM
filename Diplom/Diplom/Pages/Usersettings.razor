@@ -1,17 +1,22 @@
 ﻿@page "/usersettings"
+@inject ThemeStateService themeStateService;
+@inject HttpClient client
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@using System.Net.Http.Json
+
 <div class="full-width-header">
     <div class="header-content">
         <label class="image clickable-image" @onclick="OpenFileExplorer">
             <InputFile style="display: none;" OnChange="HandleFileChange" accept="image/*" />
-            <img src="@imageUrl" alt="Your Image" class="header-image" />
+            <img src="@imageSource" alt="Your Image" class="header-image" />
         </label>
         <div class="header-text">
-            <h1 class="name">Alessandro</h1>
+            <h1 class="name">@name</h1>
             <h2>UI Personalisierung</h2>
         </div>
     </div>
 </div>
-
 
 <div class="parent">
     <div class="left">
@@ -30,7 +35,6 @@
             <h1 class="title">TbD</h1>
 
             <div class="tbd">
-
             </div>
             <hr class="seperator" />
         </div>
@@ -50,7 +54,7 @@
             <div class="colorpicker-card">
                 <p>Click here to activate Color Picker</p>
                 <div class="colored-square">
-                    <input type="color" class="colorpicker-square" onchange="handleColorChange(this.value)" value="#B72626">
+                    <input type="color" class="colorpicker-square" value="@color" @oninput="HandleColorChange">
                 </div>
             </div>
 
@@ -62,11 +66,11 @@
                 <div class="mydict">
                     <div>
                         <label>
-                            <input type="radio" name="radio" checked="">
+                            <input type="radio" name="radio" checked="@(!isDarkmode)" @onclick="() => ChangeTheme(false)">
                             <span>Light Theme</span>
                         </label>
                         <label>
-                            <input type="radio" name="radio">
+                            <input type="radio" name="radio" checked="@isDarkmode" @onclick="() => ChangeTheme(true)">
                             <span>Dark Theme</span>
                         </label>
                     </div>
@@ -78,9 +82,68 @@
 </div>
 
 @code {
-    private string imageUrl = "icon.jpg";
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    private byte[]? image = null;
+    private string name = "User";
+    private float strompreis = 0;
+    private bool isDarkmode = false;
+    private string color = "#B72626";
+
+    private string imageSource = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Check if there is a DB entry
+            var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetSettings");
+            List<Models.Usersettings> usersettings = JsonConvert.DeserializeObject<List<Models.Usersettings>>(responseString);
+            color = usersettings[0].Color;
+            isDarkmode = usersettings[0].IsDarkmode;
+            name = usersettings[0].Name;
+            strompreis = usersettings[0].Strompreis;
+            image = usersettings[0].Image;
+            imageSource = image != null ? $"data:image/png;base64,{Convert.ToBase64String(image)}" : string.Empty;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            string errorMessage = $"Error loading miner data: {ex.Message}";
+        }
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(100);
+
+        // Trigger re-render
+        StateHasChanged();
+    }
+
+    private async Task HandleColorChange(ChangeEventArgs e)
+    {
+        string newColor = Convert.ToString(e.Value); // Convert the value to string
+        color = newColor;
+
+        try
+        {
+            // Send the new color to the API
+            string json = "{\"color\":\"" + color + "\"}";
+            Console.WriteLine(json);
+            var response = await client.PutAsync("https://localhost:7294/api/User/UpdateColor", new StringContent(json, Encoding.UTF8, "application/json"));
+            response.EnsureSuccessStatusCode(); // Ensure the API call is successful
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+
+
+    private async Task ChangeTheme(bool isDark)
+    {
+        isDarkmode = isDark;
+        await themeStateService.ToggleThemeAsync();
+    }
 
     private async Task HandleFileChange(InputFileChangeEventArgs e)
     {
@@ -91,8 +154,25 @@
             // Process the file as needed
             using (var memoryStream = new MemoryStream())
             {
-                await file.OpenReadStream().CopyToAsync(memoryStream);
-                imageUrl = $"data:{file.ContentType};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+                try
+                {
+                    await file.OpenReadStream().CopyToAsync(memoryStream);
+                    imageSource = $"data:{file.ContentType};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+                    byte[] imageData = memoryStream.ToArray();
+                    string imageBase64 = "\"" + Convert.ToBase64String(imageData) + "\"";
+
+                    Console.WriteLine(imageBase64);
+
+                    // Send the PUT request to update the image
+                    var response = await client.PutAsync("https://localhost:7294/api/User/UpdateImage", new StringContent(imageBase64, Encoding.UTF8, "application/json"));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+
+                    // Prompt the user to select another image
+                    await JSRuntime.InvokeVoidAsync("alert", ex.Message);
+                }
             }
         }
     }
@@ -116,12 +196,14 @@
 }
 
 @{
-    bool useDarkTheme = true;
-    string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
-    string themeCardColor = useDarkTheme ? "#36343B" : "#F3EEEA";
-    string themeIconBarColor = useDarkTheme ? "#1D1B20" : "#E8DECD";
-    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+    bool useDarkTheme = themeStateService.UseDarkTheme; // Declare useDarkTheme here
+    string themeBackgroundColor = useDarkTheme ? "#141218": "#dbd4c6";
+    string themeCardColor = useDarkTheme ? "#36343B":"#F3EEEA";
+    string themeIconBarColor = useDarkTheme ? "#1D1B20":"#E8DECD";
+    string themeTextColor = useDarkTheme ? "#FFFFF0":"#776B5D";
 }
+
+
 
 <script>
     function openFileExplorer() {

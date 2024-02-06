@@ -1,5 +1,7 @@
-﻿@{
-    bool useDarkTheme = true;
+﻿@inject ThemeStateService themeStateService;
+
+@{
+    bool useDarkTheme = themeStateService.UseDarkTheme;
     string themeBackgroundColor = useDarkTheme ? "#211f26" : "#dbd4c6";
     string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
 }
@@ -24,8 +26,6 @@
     </div>
 </MudNavMenu>
 
-
-
 <style>
 
     /*Kleiner Bereich Links, in dem Links sind*/
@@ -33,7 +33,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: @themeBackgroundColor !important;
         color: @themeTextColor !important;
         border-radius: 10px;
         padding: 10px;
@@ -50,7 +49,6 @@
     /* Rund um die Navbar Items */
     .mud-navmenu.mud-navmenu-default .mud-nav-link.active:not(.mud-nav-link-disabled) {
         color: #FFFFF0 !important;
-        background-image: linear-gradient(180deg, @themeBackgroundColor 50%, #B72626 100%);
         border-radius: 40px;
         margin-top: -5px;
         margin-bottom: -5px;

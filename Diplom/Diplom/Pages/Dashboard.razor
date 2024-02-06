@@ -1,6 +1,7 @@
 ﻿@page "/dashboard"
 @using Diplom.Shared
 @inherits LayoutComponentBase
+@inject ThemeStateService themeStateService;
 
 <div class="grid-container">
     <div class="griditem top-left">
@@ -35,7 +36,7 @@
 
 
 @{
-    bool useDarkTheme = true;
+    bool useDarkTheme = themeStateService.UseDarkTheme;
     string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
     string themeCardColor = useDarkTheme ? "#2B2930" : "#F3EEEA";
     string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
@@ -146,16 +147,30 @@
     {
         try
         {
-            var responseString = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
-            List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(responseString);
-            float sum = 0;
-            foreach (Miner m in minersfromdb)
-            {
-                sum += m.Hashrate;
-            }
-            float hashrateValue = sum / minersfromdb.Count;
+            // Check if there is a DB entry
+            var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetSettings");
+            List<Usersettings> usersettings = JsonConvert.DeserializeObject<List<Usersettings>>(responseString);
 
-            this.hashrateValue = (int)Math.Ceiling(hashrateValue);
+            if (usersettings.Count == 0)
+            {
+                // If no DB entry, call the /api/User/CreateInitial endpoint
+                await client.PostAsync("https://localhost:7294/api/User/CreateInitial", null);
+            }
+            else
+            {
+                var settingsstring = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
+                List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(settingsstring);
+                // Calculate hashrate if there are entries
+                float sum = 0;
+                foreach (Miner m in minersfromdb)
+                {
+                    sum += m.Hashrate;
+                }
+                float calculatedHashrate = sum / minersfromdb.Count;
+
+                // Update hashrateValue
+                this.hashrateValue = (int)Math.Ceiling(calculatedHashrate);
+            }
         }
         catch (HttpRequestException ex)
         {

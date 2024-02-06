@@ -4,12 +4,8 @@
   Comment: Styling sheet for the GCM Mobile-app / colours and layout mostly based on the already created Figma-prototypes
 */
 
-/*
-Light: EBE3D5
-Dark: 141218
-*/
 body{
-    background-color: #EBE3D5;
+    background-color: #141218;
 }
 
 #headline{
@@ -22,26 +18,20 @@ body{
     font-weight: 400;
     word-wrap: break-word;
     padding-left: 2px;
-    
 }
 
 #changebutton{
     background-color: #B72626;
-    
     border-radius: 100px;
     border-color: white;
     color: white;
     width: 110px;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #seperator{
     color: white;
     border: 1px solid white;
     opacity: 100;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #middle{
@@ -49,65 +39,44 @@ body{
     margin-bottom: 5%;
 }
 
-/*
-Light: F3EEEA, color #776B5D
-Dark: 2B2930, color white
-*/
 #rate{
-    background-color: #F3EEEA;
-    color: #776B5D;
+    background-color: #2B2930;
+    color: white;
     margin-top: 2%;
     width: 90%;
     border-radius: 24px;
     padding-top: 5%;
     border: solid 1px white;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
     
 }
-/*
-Light: F3EEEA, color #776B5D
-Dark: 2B2930, color white
-*/
+
 #hash{
-    background-color: #F3EEEA;
-    color: #776B5D;
+    background-color: #2B2930;
+    color: white;
     margin-top: 2%;
     width: 90%;
     border-radius: 24px;
     padding-top: 5%;
     border: solid 1px white;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
-/*
-Light: F3EEEA, color #776B5D
-Dark: 2B2930, color white
-*/
 #niederschlag{
-    background-color: #F3EEEA;
-    color: #776B5D;
+    background-color: #2B2930;
+    color: white;
     margin-top: 2%;
     width: 90%;
     border-radius: 24px;
     padding-top: 5%;
     border: solid 1px white;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
-/*
-Light: F3EEEA, #776B5D
-Dark: 2B2930, white
-*/
+
 #card{
-    background-color: #F3EEEA;
-    color: #776B5D;
+    background-color: #2B2930;
+    color: white;
     border: solid 1px white;
     border-radius: 24px;
     align-content: center;
     padding: 10%;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5); box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #middletop{
@@ -124,7 +93,6 @@ Dark: 2B2930, white
     margin-right: auto;
     width: 25%;
     border-radius: 100%;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5); box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 #middlesettings{
     height: 80vh;

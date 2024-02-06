@@ -4502,7 +4502,6 @@ C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\Diplom.Assemb
 C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\Diplom.AssemblyInfo.cs
 C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\Diplom.csproj.CoreCompileInputs.cache
 C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\Diplom.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\Diplom.sourcelink.json
 C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\blazor.build.boot-extension.json
 C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\blazor.boot.json
 C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\staticwebassets.build.json
@@ -4927,3 +4926,7 @@ C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\wwwroot\_fra
 C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
 C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Davare\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\biekejujle.gz
+C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll
+C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
+C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\DerAn\Documents\GitHub\GCM\Diplom\Diplom\obj\Debug\net6.0\compressed\qgd6njmxhw.gz

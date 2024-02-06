@@ -159,6 +159,35 @@ namespace MinerAPI.Controllers
             }
         }
 
+        [HttpPut("UpdateImage")]
+        public ActionResult UpdateImage([FromBody] string image)
+        {
+            try
+            {
+                var settings = _userController.Find(_ => true).FirstOrDefault();
+
+                if (settings == null)
+                {
+                    return NotFound("User settings not found.");
+                }
+
+                // Convert base64 string to byte array
+                byte[] imageData = Convert.FromBase64String(image);
+
+                var filter = Builders<Usersettings>.Filter.Eq(s => s.Id, settings.Id);
+                var update = Builders<Usersettings>.Update.Set(s => s.Image, imageData);
+
+                _userController.UpdateOne(filter, update);
+
+                return Ok("Image updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+
         public class ColorUpdateRequest
         {
             public string Color { get; set; }

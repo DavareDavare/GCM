@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@inject ThemeStateService themeStateService;
+@using Newtonsoft.Json
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -10,9 +12,9 @@
             <MudText Style="font-size: 400%; color: #fffff0" Typo="Typo.h6">GCM</MudText>
         </MudDrawerHeader>
         <div class="nav">
-            <NavMenu />
+            <NavMenu></NavMenu>
         </div>
-        
+
         <div class="section">
             <div class="usersettings">
                 <MudNavLink id="navbarlink" Href="usersettings" Match="NavLinkMatch.All">
@@ -20,15 +22,11 @@
                 </MudNavLink>
             </div>
             <div class="dots">
-                <span class="dot">
-
-                </span>
-                <span class="dot">
-
-                </span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </div>
-    </MudDrawer >
+    </MudDrawer>
     <MudMainContent id="main">
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
             @Body
@@ -36,94 +34,21 @@
     </MudMainContent>
 </MudLayout>
 
-@{
-    bool useDarkTheme = true;
-    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#dbd4c6";
-    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
-}
-
-<style>
-    .mud-drawer
-    {
-        /*Hintergrund Farbe für Navbar*/
-        background-color: @themeBackgroundColor;
-        overflow: hidden;
-    @{
-        if(useDarkTheme == false)
-        {
-            <text>-webkit-box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.5);
-                box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.5);
-            </text>
-        }
-        }
-        
-    }
-
-    /*User Settings Rad*/
-    .usersettings
-    {
-        z-index: 2;
-    }
-
-    .fa-gear
-    {
-        color: #FFFFF0;
-        font-size: 3em;
-        margin-bottom: 10px;
-    }
-
-    #navbarlink {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /*Bereich unter Nav Items*/
-    .section {
-        display: flex;
-        align-items: flex-end;
-        flex: 1;
-        overflow: hidden;
-        position: relative;
-        padding-right: 242px;
-        padding-left: 242px;
-    }
-
-    .dot {
-        height: 25px;
-        width: 25px;
-        border-radius: 50%;
-        display: inline-block;
-        position: absolute;
-    }
-
-    /* Styles for the first dot */
-    .dot:nth-child(1) {
-        height: 442px;
-        width: 442px;
-        background-color: @dotColor1;
-        bottom: -10%; /* Position in the vertical center of the first section */
-        left: -25%; /* Position in the horizontal center of the first section */
-    }
-
-    /* Styles for the second dot */
-    .dot:nth-child(2) {
-        height: 335px;
-        width: 335px;
-        background-color: @dotColor2;
-        bottom: -15%; /* Position in the vertical center of the first section */
-        left: 40%; /* Position in the horizontal center of the first section */
-        z-index: 1; /* Ensure the second dot is above the first */
-        }
-</style>
-
 @code {
     // benötigt um Navbar offen zu haben
     bool _drawerOpen = true;
-    // Example usage:
-
     string dotColor1 = "#B72626";
     string dotColor2 = "#A72525";
+
+    protected async override void OnInitialized()
+    {
+        await themeStateService.Initialize();
+
+        // Call base method
+        await base.OnInitializedAsync();
+        await Task.Delay(100);
+        StateHasChanged();
+    }
 
     void SubtractRGB(string hexColor)
     {
@@ -154,3 +79,81 @@
     }
 
 }
+
+
+@{
+    bool useDarkTheme = themeStateService.UseDarkTheme;
+    string themeBackgroundColor = useDarkTheme ? "#211f26" : "#dbd4c6";
+    string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
+}
+
+<style>
+    .mud-drawer {
+        /*Hintergrund Farbe für Navbar*/
+        background-color: @themeBackgroundColor;
+        overflow: hidden;
+    @{
+        if (useDarkTheme == false)
+        {
+            <text>-webkit-box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.5);
+                box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.5);
+            </text>
+        }
+    }
+    }
+
+    /*User Settings Rad*/
+    .usersettings {
+        z-index: 2;
+    }
+
+    .fa-gear {
+        color: #FFFFF0;
+        font-size: 3em;
+        margin-bottom: 10px;
+    }
+
+    #navbarlink {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /*Bereich unter Nav Items*/
+    .section {
+        display: flex;
+        align-items: flex-end;
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        padding-right: 242px;
+        padding-left: 242px;
+    }
+
+    .dot {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+    }
+
+        /* Styles for the first dot */
+        .dot:nth-child(1) {
+            height: 442px;
+            width: 442px;
+            background-color: @dotColor1;
+            bottom: -10%; /* Position in the vertical center of the first section */
+            left: -25%; /* Position in the horizontal center of the first section */
+        }
+
+        /* Styles for the second dot */
+        .dot:nth-child(2) {
+            height: 335px;
+            width: 335px;
+            background-color: @dotColor2;
+            bottom: -15%; /* Position in the vertical center of the first section */
+            left: 40%; /* Position in the horizontal center of the first section */
+            z-index: 1; /* Ensure the second dot is above the first */
+        }
+</style>
