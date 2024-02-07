@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject ThemeStateService themeStateService;
+@inject ColorService ColorService
 @using Newtonsoft.Json
 
 <MudThemeProvider />
@@ -44,27 +45,38 @@
     {
         await themeStateService.Initialize();
 
-        // Call base method
+        await ColorService.initialColorAsync();
+        dotColor1 = ColorService.getColor();
+        SubtractRGB(dotColor1);
+        ColorService.ColorChanged += UpdateDotColor;
         await base.OnInitializedAsync();
         await Task.Delay(100);
         StateHasChanged();
     }
 
+    private void UpdateDotColor(string color)
+    {
+        dotColor1 = color;
+        SubtractRGB(color);
+        StateHasChanged(); // Notify Blazor to re-render the component
+    }
+
+    // Don't forget to unsubscribe from the event to avoid memory leaks
+    public void Dispose()
+    {
+        ColorService.ColorChanged -= UpdateDotColor;
+    }
+
     void SubtractRGB(string hexColor)
     {
-
-        string filePath = "color.txt";
-
         try
         {
-            string content = File.ReadAllText(filePath);
-
             var color = System.Drawing.ColorTranslator.FromHtml(hexColor);
 
             // Subtract RGB components
-            int newRed = Math.Max(0, color.R - 16);
-            int newGreen = Math.Max(0, color.G - 1);
-            int newBlue = Math.Max(0, color.B - 1);
+            int newRed = Math.Max(0, color.R - 25);
+            int newGreen = Math.Max(0, color.G - 25);
+            int newBlue = Math.Max(0, color.B - 25);
 
             // Convert back to hex string
             string modifiedHex = $"#{newRed:X2}{newGreen:X2}{newBlue:X2}";

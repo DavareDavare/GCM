@@ -1,5 +1,6 @@
 ﻿@page "/usersettings"
 @inject ThemeStateService themeStateService;
+@inject ColorService ColorService
 @inject HttpClient client
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
@@ -54,7 +55,7 @@
             <div class="colorpicker-card">
                 <p>Click here to activate Color Picker</p>
                 <div class="colored-square">
-                    <input type="color" class="colorpicker-square" value="@color" @oninput="HandleColorChange">
+                    <input type="color" class="colorpicker-square" value="@ColorService.getColor()" @oninput="HandleColorChange">
                 </div>
             </div>
 
@@ -120,22 +121,7 @@
     private async Task HandleColorChange(ChangeEventArgs e)
     {
         string newColor = Convert.ToString(e.Value); // Convert the value to string
-        color = newColor;
-
-        try
-        {
-            // Send the new color to the API
-            string json = "{\"color\":\"" + color + "\"}";
-            Console.WriteLine(json);
-            var response = await client.PutAsync("https://localhost:7294/api/User/UpdateColor", new StringContent(json, Encoding.UTF8, "application/json"));
-            response.EnsureSuccessStatusCode(); // Ensure the API call is successful
-            NavigationManager.NavigateTo(NavigationManager.Uri, true);
-        }
-        catch (Exception ex)
-        {
-            // Handle any errors
-            Console.WriteLine(ex.Message);
-        }
+        ColorService.SetColorAsync(newColor);
     }
 
 
@@ -144,6 +130,7 @@
     {
         isDarkmode = isDark;
         await themeStateService.ToggleThemeAsync();
+        NavigationManager.NavigateTo(NavigationManager.Uri, true);
     }
 
     private async Task HandleFileChange(InputFileChangeEventArgs e)
