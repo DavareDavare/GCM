@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nxyRlZ4fJMx5DlJdik8xTZPipD7HW7ZLmyOEpKPjvNhA+zfjFlcHLFUsTRS5IsoI6eEep621ufbRW+NqqTmS0Q==",
+  "dgSpecHash": "Rwsh8Oo83CvkClYBs7uUfbnanJFpiN1yONrVkEvkoXNO967540j870ZjMQhgWVHzdH5SF5dw7ns8gkkLtzVxLA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+  "projectFilePath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DerAn\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\DerAn\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

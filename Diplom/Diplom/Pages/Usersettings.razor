@@ -129,6 +129,7 @@
             Console.WriteLine(json);
             var response = await client.PutAsync("https://localhost:7294/api/User/UpdateColor", new StringContent(json, Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode(); // Ensure the API call is successful
+            NavigationManager.NavigateTo(NavigationManager.Uri, true);
         }
         catch (Exception ex)
         {

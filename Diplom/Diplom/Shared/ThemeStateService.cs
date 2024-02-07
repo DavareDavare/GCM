@@ -10,27 +10,43 @@ public class ThemeStateService
 
     public async Task ToggleThemeAsync()
     {
-        UseDarkTheme = !UseDarkTheme;
-        var response = await client.PutAsync("https://localhost:7294/api/User/UpdateIsDarkmode", new StringContent(UseDarkTheme.ToString().ToLower(), Encoding.UTF8, "application/json"));
-        NotifyStateChanged();
+        try
+        {
+            UseDarkTheme = !UseDarkTheme;
+            var response = await client.PutAsync("https://localhost:7294/api/User/UpdateIsDarkmode", new StringContent(UseDarkTheme.ToString().ToLower(), Encoding.UTF8, "application/json"));
+            NotifyStateChanged();
+        }
+        catch (Exception ex)
+        {
+            await Console.Out.WriteLineAsync(ex.Message);
+        }
+        
     }
 
     public async Task Initialize()
     {
-        var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetIsDarkMode");
-        await Console.Out.WriteLineAsync(responseString);
-        if (responseString.Contains("true"))
+        try
         {
-            UseDarkTheme = true;
-            NotifyStateChanged();
-        }
-        else
-        {
-            UseDarkTheme = false;
-            NotifyStateChanged();
-        }
+            var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetIsDarkMode");
+            await Console.Out.WriteLineAsync(responseString);
+            if (responseString.Contains("true"))
+            {
+                UseDarkTheme = true;
+                NotifyStateChanged();
+            }
+            else
+            {
+                UseDarkTheme = false;
+                NotifyStateChanged();
+            }
 
-        await Console.Out.WriteLineAsync("AUSGABE: " + UseDarkTheme);
+            await Console.Out.WriteLineAsync("AUSGABE: " + UseDarkTheme);
+        }
+        catch (Exception ex)
+        {
+            await Console.Out.WriteLineAsync(ex.Message);
+        }
+        
     }
 
     public void NotifyStateChanged() => OnChange?.Invoke();

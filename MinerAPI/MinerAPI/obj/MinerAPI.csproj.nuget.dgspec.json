@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {}
+    "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {
+    "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+        "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
         "projectName": "MinerAPI",
-        "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+        "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
         "packagesPath": "C:\\Users\\DerAn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\obj\\",
+        "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

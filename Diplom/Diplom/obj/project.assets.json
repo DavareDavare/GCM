@@ -2051,11 +2051,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+      "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\Diplom\\Diplom\\Diplom.csproj",
       "projectName": "Diplom",
-      "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+      "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\Diplom\\Diplom\\Diplom.csproj",
       "packagesPath": "C:\\Users\\DerAn\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\obj\\",
+      "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\Diplom\\Diplom\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

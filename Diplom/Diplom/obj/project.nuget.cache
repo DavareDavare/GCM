@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9f6B9ZtTIFPIql3OmhK5DrJjuzTYmzGPWXy8j46DgHdpPtBIv2IjLDPp01XS5y5r32K9+tMoaahF1AHBLsDu4w==",
+  "dgSpecHash": "nZEt4Zc6vp8ZtF9eLLYEusUcKBSC6BEgZxgk1N2lS5Cm9aCspIgejm1VvMoFvJ8vu/1rRybguejPPmhaiF/pTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DerAn\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+  "projectFilePath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\Diplom\\Diplom\\Diplom.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DerAn\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.7\\microsoft.aspnetcore.authorization.6.0.7.nupkg.sha512",
     "C:\\Users\\DerAn\\.nuget\\packages\\microsoft.aspnetcore.components\\6.0.7\\microsoft.aspnetcore.components.6.0.7.nupkg.sha512",
