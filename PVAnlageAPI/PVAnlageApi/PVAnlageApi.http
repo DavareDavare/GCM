@@ -1,0 +1,6 @@
+@PVAnlageApi_HostAddress = http://localhost:5013
+
+GET {{PVAnlageApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
