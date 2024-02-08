@@ -155,7 +155,7 @@ function switchNiederschlag(){
 
     //creates a new table with the weather data / existing error: only a placeholder up until now, yet to be filled with real weather data
     let divclass = document.getElementById('AktuellerNiederschlag');
-    divclass.innerHTML = '<table id="showweather"><thead><th>Morning</th><th>Afternoon</th><th>Night</th></thead><tbody><tr><td>Yes</td><td>No</td><td>Maybe</td></tr></tbody></table>';
+    divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 300px; font-size: larger;"><thead><th> 06:00 </th><th> 12:00 </th><th> 18:00 </th><th> 00:00 </th></thead><tbody><tr><td> <i class="fa fa-cloud"></i> </td><td> <i class="fa fa-cloud"></i>  </td><td>  <i class="fa fa-cloud"></i>  </td><td>  <i class="fa fa-cloud"></i>  </td></tr></tbody></table>';
 
     //closes the two other data-sections if opened
     if(statusHash==1){
@@ -184,12 +184,35 @@ function changecolour(){
   var colourfield = document.getElementById('colourpicker');
   colourpick = colourfield.value;
   document.getElementById('changebutton').style = 'background-color: '+colourpick+';';
+  
+  var geturl = 'https://localhost:7294/api/User/UpdateColor';
+
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ color: colourpick })
+};
+
+  fetch(geturl, requestOptions)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
 }
 
 function fetchallfromdb(){
   //loadRate();
   //loadHash();
   //loadWeather();
+  loadColour();
+  //loadTheme();
 }
 
 function loadRate(){
@@ -255,3 +278,103 @@ function loadWeather(){
       divclass.querySelector("h2").innerHTML=gethash+' %';
 }
 
+function loadColour(){
+  var geturl = 'https://localhost:7294/api/User/GetColor';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+      var getcolour = data;
+      const collection = document.getElementsByClassName("loaded");
+
+        for (let i = 0; i < collection.length; i++) {
+          collection[i].style.backgroundColor = getcolour;
+        }
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+}
+function loadSettings(){
+  loadColour();
+
+  var geturl = 'https://localhost:7294/api/User/GetColor';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+      var getcolour = data;
+      document.getElementById('colourpicker').value=getcolour;
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+
+}
+
+function loadasics(){
+  loadColour();
+
+  var geturl = 'https://localhost:7294/api/Miner/GetMiner';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+      var counter = Object.keys(data).length;
+      
+
+      for(var x=0; x<counter; x++){
+        var idstring = 'asic'+(x+1);
+        document.getElementById(idstring).innerHTML=data[x].group;
+        }
+      
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+
+}
+
+function loadTheme(){
+  var geturl = 'https://localhost:7294/api/User/GetIsDarkmode';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+
+      if(data=="false"){
+        //alert(data);
+      }
+      else if(data=="true"){
+        //alert(data);
+      }
+
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+}
+
+function switchTheme(){
+  //alert("Switched!");
+}

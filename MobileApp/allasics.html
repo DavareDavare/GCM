@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="loadasics()">
     <div class="container">
         <!--Section for the headline of the page-->
         <div class="row" id="headline">
@@ -27,7 +27,7 @@
             <div class="col"></div>
             <!--redirect to the main-view-->
             <div class="col">
-                <input type="button" id="changebutton" onclick="location.href='index.html';" value="Home" />
+                <input type="button" class="loaded" id="changebutton" onclick="location.href='index.html';" value="Home" />
             </div>
         </div>
 
@@ -36,36 +36,36 @@
         <!--middle-section / separated into three different rows for data / existing error: number of boxes is always the same and does not change depending on the number of existing Asic's-->
         <div class="row" id="middletop">
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic1]</h2>
+                <h2 class="my-auto" id="asic1"></h2>
             </div>
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic2]</h2>
+                <h2 class="my-auto" id="asic2"></h2>
             </div>
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic3]</h2>
+                <h2 class="my-auto" id="asic3"></h2>
             </div>
         </div>
         
         <div class="row" id="middletop">
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic4]</h2>
+                <h2 class="my-auto"></h2>
             </div>
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic5]</h2>
+                <h2 class="my-auto"></h2>
             </div>
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic6]</h2>
+                <h2 class="my-auto"></h2>
             </div>
         </div>
         <div class="row" id="middletop">
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic7]</h2>
+                <h2 class="my-auto"></h2>
             </div>
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic8]</h2>
+                <h2 class="my-auto"></h2>
             </div>
             <div class="col-3 col-md-6 mx-auto d-flex justify-content-center" id="card">
-                <h2 class="my-auto">[Asic9]</h2>
+                <h2 class="my-auto"></h2>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
 
     </div>
 
-    <script src="asics.js"></script>
+    <script src="switch.js"></script>
     <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

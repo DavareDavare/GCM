@@ -1220,23 +1220,39 @@
     ]
   },
   "packageFolders": {
+<<<<<<< Updated upstream
     "C:\\Users\\DerAn\\.nuget\\packages\\": {},
+=======
+    "C:\\Users\\Startklar\\.nuget\\packages\\": {},
+>>>>>>> Stashed changes
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< Updated upstream
       "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
       "projectName": "MinerAPI",
       "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
       "packagesPath": "C:\\Users\\DerAn\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+      "projectName": "MinerAPI",
+      "projectPath": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+      "packagesPath": "C:\\Users\\Startklar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\obj\\",
+>>>>>>> Stashed changes
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< Updated upstream
         "C:\\Users\\DerAn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+        "C:\\Users\\Startklar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> Stashed changes
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1305,7 +1321,11 @@
       "code": "Undefined",
       "level": "Warning",
       "warningLevel": 1,
+<<<<<<< Updated upstream
       "message": "Problem beim Lesen der Cachedatei \"C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\MinerAPI\\MinerAPI\\obj\\project.nuget.cache\": Invalid property identifier character: <. Path 'version', line 3, position 0."
+=======
+      "message": "Problem beim Lesen der Cachedatei \"C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\obj\\project.nuget.cache\": Invalid property identifier character: <. Path 'version', line 3, position 0."
+>>>>>>> Stashed changes
     },
     {
       "code": "NU1701",
