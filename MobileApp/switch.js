@@ -68,9 +68,7 @@ function switchRate(){
   else if(statusRate==1){
 
     statusRate = 0;
-
-    let divclass = document.getElementById('rate');
-    divclass.querySelector("h2").innerHTML="hhh %";
+    loadRate();
     let chartclass = document.getElementById('chartDiv');
     chartclass.style="position: relative; height:0vh; width:0vw; margin: 0px;";
     
@@ -138,8 +136,7 @@ function switchHash(){
 
     statusHash = 0;
 
-    let divclass = document.getElementById('hash');
-    divclass.querySelector("h2").innerHTML="hhh TH/s";
+    loadHash();
     let chartclass = document.getElementById('chartDivHash');
     chartclass.style="position: relative; height:0vh; width:0vw; margin: 0px;";
     
@@ -176,8 +173,8 @@ function switchNiederschlag(){
     statusniederschlag=0;
 
     let divclass = document.getElementById('AktuellerNiederschlag');
-    divclass.innerHTML = '<h2 id="textNiedereschlag">hhh %</h2><div id="wetterbericht"" style="position: relative; height:0vh; width:0vw; margin: 0px;" onclick="switchNiederschlag()"></div>';
-    
+    divclass.innerHTML = '<h2 id="textNiedereschlag"></h2><div id="wetterbericht"" style="position: relative; height:0vh; width:0vw; margin: 0px;" onclick="switchNiederschlag()"></div>';
+    loadWeather();
   }
 
 }
@@ -187,4 +184,74 @@ function changecolour(){
   var colourfield = document.getElementById('colourpicker');
   colourpick = colourfield.value;
   document.getElementById('changebutton').style = 'background-color: '+colourpick+';';
-  }
+}
+
+function fetchallfromdb(){
+  //loadRate();
+  //loadHash();
+  //loadWeather();
+}
+
+function loadRate(){
+  let divclass = document.getElementById('rate');
+  var geturl = 'https://localhost:7000/api/Pvanlage/GetPv';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+      var getrate = data[0].rate;
+      divclass.querySelector("h2").innerHTML=getrate+' %';
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+}
+
+function loadHash(){
+  let divclass = document.getElementById('hash');
+  var geturl = 'https://localhost:7294/api/Miner/GetMiner';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+      var gethash = data[0].hashRate;
+      divclass.querySelector("h2").innerHTML=gethash+' TH/s';
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+}
+
+function loadWeather(){
+  let divclass = document.getElementById('niederschlag');
+  /*Anpassen an url:
+  var geturl = '';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+      var gethash = data[0].hashRate;
+      divclass.querySelector("h2").innerHTML=gethash+' TH/s';
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });*/
+    var gethash = 1;
+      divclass.querySelector("h2").innerHTML=gethash+' %';
+}
+
