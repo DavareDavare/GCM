@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="loadSettings()">
   <div class="container">
     <!--Section for the headline-->
     <div class="row" id="headline">
@@ -27,22 +27,29 @@
         <div class="col"></div>
         <!--redirect to the main-view-->
         <div class="col">
-          <input type="button" id="changebutton" onclick="location.href='index.html';" value="Home" />
+          <input type="button" class="loaded" id="changebutton" onclick="location.href='index.html';" value="Home" />
         </div>
     </div>
 
     <hr id="seperator">
-
-    <picture>
-      <img src="pingu.jpg" class="piccenter">
-    </picture>
+    <br><br>
+    <label class="switch" style="text-align: center;" onclick="switchTheme()">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+    <br>
+    <!--
+    <<picture>
+      <img src="pingu.jpg" class="piccenter" onclick="changePic()">
+    </picture>>
+    -->
 
     <!--section for the main-display / existing error: not yet filled -->
     <div class="row" id="middlesettings">
-      <input type="text" placeholder="Strompreis" id="pricesettings" style="width: 80%; height: 8%; display: block; margin-left: auto; margin-right: auto; text-align: center;">
-      <input type="text" placeholder="To be defined" style="width: 80%; height: 16%; display: block; margin-left: auto; margin-right: auto; text-align: center;">
-      <input type="text" placeholder="To be defined" style="width: 80%; height: 16%; display: block; margin-left: auto; margin-right: auto; text-align: center;">
-      <input type="color" id="colourpicker" value="#B72626"  style="width: 25%; height: 16%; display: block; margin-left: auto; margin-right: auto;" onchange="changecolour()">
+      <input type="text" placeholder="Strompreis" id="pricesettings" style="width: 80%; height: 8%; display: block; margin-left: auto; margin-right: auto; text-align: center; font-size: large;">
+      <input type="text" placeholder="To be defined" style="width: 80%; height: 16%; display: block; margin-left: auto; margin-right: auto; text-align: center; font-size: large;">
+      <input type="text" placeholder="To be defined" style="width: 80%; height: 16%; display: block; margin-left: auto; margin-right: auto; text-align: center; font-size: large;">
+      <input type="color" id="colourpicker" value="#2B2930"  style="width: 25%; height: 16%; display: block; margin-left: auto; margin-right: auto;" onchange="changecolour()">
     </div>
 
     <hr id="seperator">

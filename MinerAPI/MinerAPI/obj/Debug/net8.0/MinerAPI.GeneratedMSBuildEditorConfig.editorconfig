@@ -9,11 +9,19 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MinerAPI
 build_property.RootNamespace = MinerAPI
-build_property.ProjectDir = C:\Users\Davare\Documents\GitHub\GCM\MinerAPI\MinerAPI\
+<<<<<<< Updated upstream
+build_property.ProjectDir = C:\Users\DerAn\Documents\GitHub\Reise-API\GCM\MinerAPI\MinerAPI\
+=======
+build_property.ProjectDir = C:\Users\Startklar\Documents\GitHub\GCM\MinerAPI\MinerAPI\
+>>>>>>> Stashed changes
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Davare\Documents\GitHub\GCM\MinerAPI\MinerAPI
+<<<<<<< Updated upstream
+build_property.MSBuildProjectDirectory = C:\Users\DerAn\Documents\GitHub\Reise-API\GCM\MinerAPI\MinerAPI
+=======
+build_property.MSBuildProjectDirectory = C:\Users\Startklar\Documents\GitHub\GCM\MinerAPI\MinerAPI
+>>>>>>> Stashed changes
 build_property._RazorSourceGeneratorDebug = 
