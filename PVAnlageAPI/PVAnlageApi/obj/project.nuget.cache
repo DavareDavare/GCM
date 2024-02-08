@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "crvKdV9/he0smNIG7bUA7DO6oRT+P2CvvqtCV9ReYY+I1y8NEJfDUMQOwgXhfGRsfIoEdAT3ut7GmV2czvcM8Q==",
+  "dgSpecHash": "+MZA4WSGQqlZi5g69Oma0wrhp9ReT2CFLWwCccG/bh71fJYjnVUEOY33nXyr+OfYAgv2k2D/2a84I4CQUVewww==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Startklar\\Documents\\GitHub\\PVAnlageAPI\\PVAnlageApi\\PVAnlageApi.csproj",
+  "projectFilePath": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\PVAnlageAPI\\PVAnlageApi\\PVAnlageApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Startklar\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\Startklar\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",
