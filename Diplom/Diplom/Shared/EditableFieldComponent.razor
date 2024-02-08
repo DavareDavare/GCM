@@ -7,7 +7,9 @@
 }
 else
 {
-    <input type="text" @bind="EditingValue" @onblur="UpdateValue" @onkeyup="HandleKeyPress" @ref="inputField" style="align-self: center"/>
+    <div class="inputfield">
+        <input type="text" class="textfield" @bind="EditingValue" @onblur="UpdateValue" @onkeyup="HandleKeyPress" @ref="inputField"/>
+    </div>
 }
 
 @code {
@@ -42,3 +44,18 @@ else
         }
     }
 }
+
+<style>
+    .inputfield
+    {
+        margin-top:50px;
+        display: flex;
+        align-content:center;
+        justify-content: center;
+    }
+
+    .textfield
+    {
+        height:40px;
+    }
+</style>

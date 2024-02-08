@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -30,23 +31,36 @@ namespace Diplom.Shared
             }
         }
 
-        public string getColor()
+        public async Task<string> getColorAsync()
         {
+            if (SelectedColor.Equals(""))
+            {
+                await initialColorAsync();
+            }
             return SelectedColor;
         }
 
         public async Task initialColorAsync()
         {
-            var s = await client.GetStringAsync("https://localhost:7294/api/User/GetColor");
+            try
+            {
+                await Task.Delay(500);
+                var s = await client.GetStringAsync("https://localhost:7294/api/User/GetColor");
 
-            // Deserialize the JSON array using Newtonsoft.Json
-            string[] colors = JsonConvert.DeserializeObject<string[]>(s);
+                // Deserialize the JSON array using Newtonsoft.Json
+                string[] colors = JsonConvert.DeserializeObject<string[]>(s);
 
-            // Extract the color value from the array
-            SelectedColor = colors[0];
+                // Extract the color value from the array
+                SelectedColor = colors[0];
 
-            // Print the selected color
-            await Console.Out.WriteLineAsync("Selected Color: " + SelectedColor);
+                // Print the selected color
+                await Console.Out.WriteLineAsync("Selected Color: " + SelectedColor);
+            }
+            catch
+            {
+                
+            }
+
         }
 
     }

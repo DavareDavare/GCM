@@ -55,7 +55,7 @@
             <div class="colorpicker-card">
                 <p>Click here to activate Color Picker</p>
                 <div class="colored-square">
-                    <input type="color" class="colorpicker-square" value="@ColorService.getColor()" @oninput="HandleColorChange">
+                    <input type="color" class="colorpicker-square" value="@color" @oninput="HandleColorChange">
                 </div>
             </div>
 
@@ -456,12 +456,6 @@
         padding-left: 0px;
         padding-top: 25px;
         margin: 30px;
-    }
-
-    .left {
-    }
-
-    .right {
     }
 
     .div1 {

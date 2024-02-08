@@ -41,18 +41,39 @@
     string dotColor1 = "#B72626";
     string dotColor2 = "#A72525";
 
-    protected async override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        await checkSettings();
         await themeStateService.Initialize();
-
         await ColorService.initialColorAsync();
-        dotColor1 = ColorService.getColor();
+
+        dotColor1 = await ColorService.getColorAsync();
         SubtractRGB(dotColor1);
         ColorService.ColorChanged += UpdateDotColor;
+
         await base.OnInitializedAsync();
         await Task.Delay(100);
         StateHasChanged();
     }
+
+
+    public async Task checkSettings()
+    {
+        HttpClient client = new();
+        var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetSettings");
+        List<Usersettings> usersettings = JsonConvert.DeserializeObject<List<Usersettings>>(responseString);
+        Console.WriteLine("Anzahl Usersettings:" + usersettings.Count);
+        if (usersettings.Count == 0)
+        {
+            await client.PostAsync("https://localhost:7294/api/User/CreateInitial", null);
+        }
+        else
+        {
+            Console.WriteLine("Usersettings gefunden.");
+        }
+    }
+
+
 
     private void UpdateDotColor(string color)
     {

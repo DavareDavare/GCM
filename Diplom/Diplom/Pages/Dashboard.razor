@@ -2,6 +2,7 @@
 @using Diplom.Shared
 @inherits LayoutComponentBase
 @inject ThemeStateService themeStateService;
+@inject ColorService ColorService;
 
 <div class="grid-container">
     <div class="griditem top-left">
@@ -115,7 +116,7 @@
     .values {
         margin-top: 50px;
         font-weight: bold;
-        color: red;
+        color: @textcolor;
     }
 
     .bottom-group {
@@ -137,13 +138,42 @@
 @code {
     private static readonly HttpClient client = new HttpClient();
 
-    private int reststromPercentage = 69;
+    private float reststromPercentage = 0;
     private int hashrateValue = 0;
     private int niederschlagPercentage = 42;
+    private string textcolor = "";
 
     private string errorMessage = "";
 
     protected override async Task OnInitializedAsync()
+    {
+        textcolor = await ColorService.getColorAsync();
+        ColorService.ColorChanged += UpdateColor;
+        GetHashrate();
+        GetStrom();
+        
+
+        await base.OnInitializedAsync();
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(150);
+
+        // Trigger re-render
+        StateHasChanged();
+    }
+
+    private async void GetStrom()
+    {
+        var responseString = await client.GetStringAsync("https://localhost:7000/api/Pvanlage/GetPv");
+        dynamic jsonResponse = JsonConvert.DeserializeObject(responseString);
+
+        // Extract rate from the response
+        reststromPercentage = jsonResponse[0]?.rate;
+        Console.WriteLine(reststromPercentage);
+        StateHasChanged();
+    }
+
+    private async void GetHashrate()
     {
         try
         {
@@ -151,39 +181,38 @@
             var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetSettings");
             List<Usersettings> usersettings = JsonConvert.DeserializeObject<List<Usersettings>>(responseString);
 
-            if (usersettings.Count == 0)
+            var settingsstring = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
+            List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(settingsstring);
+            // Calculate hashrate if there are entries
+            float sum = 0;
+            foreach (Miner m in minersfromdb)
             {
-                // If no DB entry, call the /api/User/CreateInitial endpoint
-                await client.PostAsync("https://localhost:7294/api/User/CreateInitial", null);
+                sum += m.Hashrate;
             }
-            else
-            {
-                var settingsstring = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
-                List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(settingsstring);
-                // Calculate hashrate if there are entries
-                float sum = 0;
-                foreach (Miner m in minersfromdb)
-                {
-                    sum += m.Hashrate;
-                }
-                float calculatedHashrate = sum / minersfromdb.Count;
+            float calculatedHashrate = sum / minersfromdb.Count;
 
-                // Update hashrateValue
-                this.hashrateValue = (int)Math.Ceiling(calculatedHashrate);
-            }
+            // Update hashrateValue
+            this.hashrateValue = (int)Math.Ceiling(calculatedHashrate);
+            StateHasChanged();
         }
         catch (HttpRequestException ex)
         {
             // Handle the exception by displaying an error message
             errorMessage = $"Error loading miner data: {ex.Message}";
         }
-
-        // Introduce a delay of 1 second (1000 milliseconds)
-        await Task.Delay(100);
-
-        // Trigger re-render
-        StateHasChanged();
     }
+
+    private void UpdateColor(string color)
+    {
+        textcolor = color;
+        StateHasChanged(); // Notify Blazor to re-render the component
+    }
+
+    public void Dispose()
+    {
+        ColorService.ColorChanged -= UpdateColor;
+    }
+
 
     private async void UpdateHashrateValue(int newValue)
     {
