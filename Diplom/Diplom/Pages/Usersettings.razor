@@ -120,16 +120,19 @@
 
     private async Task HandleColorChange(ChangeEventArgs e)
     {
-        string newColor = Convert.ToString(e.Value); // Convert the value to string
+        //Auslesen des Color Pickers
+        string newColor = Convert.ToString(e.Value);
+        //Event Call
         ColorService.SetColorAsync(newColor);
     }
-
 
 
     private async Task ChangeTheme(bool isDark)
     {
         isDarkmode = isDark;
+        //Event Call
         await themeStateService.ToggleThemeAsync();
+        //Website Reload
         NavigationManager.NavigateTo(NavigationManager.Uri, true);
     }
 

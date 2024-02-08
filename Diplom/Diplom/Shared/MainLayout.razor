@@ -43,12 +43,19 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //Prüft ob neue User Settings benötigt werden
         await checkSettings();
+
+        //Holt sich die Variablen aus DB in den Service
         await themeStateService.Initialize();
         await ColorService.initialColorAsync();
 
+        //Holt Farbe aus Service
         dotColor1 = await ColorService.getColorAsync();
+        //Berechnet zweite Farbe
         SubtractRGB(dotColor1);
+
+        //Abonniert Event
         ColorService.ColorChanged += UpdateDotColor;
 
         await base.OnInitializedAsync();
@@ -80,12 +87,6 @@
         dotColor1 = color;
         SubtractRGB(color);
         StateHasChanged(); // Notify Blazor to re-render the component
-    }
-
-    // Don't forget to unsubscribe from the event to avoid memory leaks
-    public void Dispose()
-    {
-        ColorService.ColorChanged -= UpdateDotColor;
     }
 
     void SubtractRGB(string hexColor)

@@ -7,22 +7,28 @@ namespace Diplom.Shared
 {
     public class ColorService
     {
+        //HTTPClient für HTTPRequests
         HttpClient client = new HttpClient();
-        public event Action<string> ColorChanged;
 
-        public string SelectedColor = ""; // Default color
+        //Das Event
+        public event Action<string> ColorChanged;
+        //Action ist ein Typ eines Events
+        //Wenn Event getriggered wird, werden alle abonnierten Methoden aufgerufen
+
+        //Die benötigte Variable
+        public string SelectedColor = "";
 
         public async Task SetColorAsync(string color)
         {
             SelectedColor = color;
             try
             {
-                // Send the new color to the API
+                //Zusammenbau des Bodies für PutRequest
                 string json = "{\"color\":\"" + color + "\"}";
-                Console.WriteLine(json);
+                //Put Request
                 var response = await client.PutAsync("https://localhost:7294/api/User/UpdateColor", new StringContent(json, Encoding.UTF8, "application/json"));
-                response.EnsureSuccessStatusCode(); // Ensure the API call is successful
-                ColorChanged?.Invoke(SelectedColor); // Notify subscribers that the color has changed
+                //Triggert Event und informiert alle Event Subscriber
+                ColorChanged?.Invoke(SelectedColor); 
             }
             catch (Exception ex)
             {
@@ -33,8 +39,10 @@ namespace Diplom.Shared
 
         public async Task<string> getColorAsync()
         {
+            //Überprüfung ob Farbe bereits geladen ist
             if (SelectedColor.Equals(""))
             {
+                //Holt Farbe aus DB
                 await initialColorAsync();
             }
             return SelectedColor;
@@ -56,9 +64,9 @@ namespace Diplom.Shared
                 // Print the selected color
                 await Console.Out.WriteLineAsync("Selected Color: " + SelectedColor);
             }
-            catch
+            catch (Exception ex)
             {
-                
+                await Console.Out.WriteLineAsync(ex.Message);
             }
 
         }
