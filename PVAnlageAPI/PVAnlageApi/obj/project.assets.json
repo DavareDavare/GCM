@@ -1670,23 +1670,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DerAn\\.nuget\\packages\\": {},
+    "C:\\Users\\Davare\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\PVAnlageAPI\\PVAnlageApi\\PVAnlageApi.csproj",
+      "projectUniqueName": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\PVAnlageAPI\\PVAnlageApi\\PVAnlageApi.csproj",
       "projectName": "PVAnlageApi",
-      "projectPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\PVAnlageAPI\\PVAnlageApi\\PVAnlageApi.csproj",
-      "packagesPath": "C:\\Users\\DerAn\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DerAn\\Documents\\GitHub\\Reise-API\\GCM\\PVAnlageAPI\\PVAnlageApi\\obj\\",
+      "projectPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\PVAnlageAPI\\PVAnlageApi\\PVAnlageApi.csproj",
+      "packagesPath": "C:\\Users\\Davare\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\PVAnlageAPI\\PVAnlageApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\DerAn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Davare\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1750,7 +1750,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
