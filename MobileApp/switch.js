@@ -336,7 +336,6 @@ function loadasics(){
     })
     .then(data=>{
       var counter = Object.keys(data).length;
-      
 
       for(var x=0; x<counter; x++){
         var idstring = 'asic'+(x+1);
