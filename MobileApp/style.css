@@ -1,6 +1,6 @@
 /*
   Author: Sarah Hagenhofer
-  Lastly edited: 14.01.2023
+  Lastly edited: 14.01.2024
   Comment: Styling sheet for the GCM Mobile-app / colours and layout mostly based on the already created Figma-prototypes
 */
 
@@ -18,6 +18,7 @@ body{
     font-weight: 400;
     word-wrap: break-word;
     padding-left: 2px;
+    
 }
 
 #changebutton{
@@ -26,12 +27,16 @@ body{
     border-color: white;
     color: white;
     width: 110px;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #seperator{
     color: white;
     border: 1px solid white;
     opacity: 100;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #middle{
@@ -47,6 +52,8 @@ body{
     border-radius: 24px;
     padding-top: 5%;
     border: solid 1px white;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
     
 }
 
@@ -58,6 +65,8 @@ body{
     border-radius: 24px;
     padding-top: 5%;
     border: solid 1px white;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #niederschlag{
@@ -68,6 +77,8 @@ body{
     border-radius: 24px;
     padding-top: 5%;
     border: solid 1px white;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #card{
@@ -77,6 +88,8 @@ body{
     border-radius: 24px;
     align-content: center;
     padding: 10%;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
 }
 
 #middletop{

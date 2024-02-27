@@ -1,0 +1,176 @@
+/*
+  Author: Sarah Hagenhofer
+  Lastly edited: 14.01.2024
+  Comment: Styling sheet for the GCM Mobile-app / colours and layout mostly based on the already created Figma-prototypes
+*/
+
+body{
+    background-color: #dbd4c6;
+}
+
+#headline{
+    margin-top: 5%;
+}
+
+#title{
+    color: white;
+    font-size: 25px;
+    font-weight: 400;
+    word-wrap: break-word;
+    padding-left: 2px;
+    
+}
+
+#changebutton{
+    background-color: #2B2930;
+    border-radius: 100px;
+    border-color: white;
+    color: white;
+    width: 110px;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+}
+
+#seperator{
+    color: white;
+    border: 1px solid white;
+    opacity: 100;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+}
+
+#middle{
+    height: 80vh;
+    margin-bottom: 5%;
+}
+
+#rate{
+    background-color: #F3EEEA;
+    color: #776B5D;;
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 24px;
+    padding-top: 5%;
+    border: solid 1px white;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    
+}
+
+#hash{
+    background-color: #F3EEEA;
+    color: #776B5D;;
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 24px;
+    padding-top: 5%;
+    border: solid 1px white;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+}
+
+#niederschlag{
+    background-color: #F3EEEA;
+    color: #776B5D;;
+    margin-top: 2%;
+    width: 90%;
+    border-radius: 24px;
+    padding-top: 5%;
+    border: solid 1px white;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+}
+
+#card{
+    background-color: #F3EEEA;
+    color: #776B5D;
+    border: solid 1px white;
+    border-radius: 24px;
+    align-content: center;
+    padding: 10%;
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.5);
+}
+
+#middletop{
+    height: 26vh;
+    margin-bottom: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#middlesettings{
+    height: 80vh;
+    margin-bottom: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+
+
+.switch {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2B2930;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2B2930;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }

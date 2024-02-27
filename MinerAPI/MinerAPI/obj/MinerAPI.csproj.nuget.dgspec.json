@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {}
+    "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {
+    "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
         "projectName": "MinerAPI",
-        "projectPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
-        "packagesPath": "C:\\Users\\Davare\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\obj\\",
+        "projectPath": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\MinerAPI.csproj",
+        "packagesPath": "C:\\Users\\Startklar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Startklar\\Documents\\GitHub\\GCM\\MinerAPI\\MinerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Davare\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Startklar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

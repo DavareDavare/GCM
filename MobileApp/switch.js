@@ -1,6 +1,6 @@
 /*
   Author: Sarah Hagenhofer
-  Lastly edited: 14.01.2023
+  Lastly edited: 27.02.2024
   Comment: JS file for index.html
 */
 
@@ -212,7 +212,7 @@ function fetchallfromdb(){
   //loadHash();
   //loadWeather();
   loadColour();
-  //loadTheme();
+  loadTheme();
 }
 
 function loadRate(){
@@ -302,6 +302,7 @@ function loadColour(){
 }
 function loadSettings(){
   loadColour();
+  loadTheme();
 
   var geturl = 'https://localhost:7294/api/User/GetColor';
 
@@ -324,6 +325,7 @@ function loadSettings(){
 
 function loadasics(){
   loadColour();
+  loadTheme();
 
   var geturl = 'https://localhost:7294/api/Miner/GetMiner';
 
@@ -362,10 +364,33 @@ function loadTheme(){
     .then(data=>{
 
       if(data=="false"){
-        //alert(data);
+        var newLink = document.createElement('link');
+          newLink.rel = 'stylesheet';
+          newLink.type = 'text/css';
+          newLink.href = 'lightstyle.css';
+
+        var head = document.head;
+        var oldLink = document.getElementById('stylesheet');
+
+        if (oldLink) {
+          head.removeChild(oldLink);
+        }
+          head.appendChild(newLink);
+
       }
       else if(data=="true"){
-        //alert(data);
+        var newLink = document.createElement('link');
+          newLink.rel = 'stylesheet';
+          newLink.type = 'text/css';
+          newLink.href = 'style.css';
+
+        var head = document.head;
+        var oldLink = document.getElementById('stylesheet');
+
+        if (oldLink) {
+          head.removeChild(oldLink);
+        }
+          head.appendChild(newLink);
       }
 
     })
@@ -375,5 +400,68 @@ function loadTheme(){
 }
 
 function switchTheme(){
-  //alert("Switched!");
+  
+  var geturl = 'https://localhost:7294/api/User/GetIsDarkmode';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+
+      if(data=="false"){
+        var url = 'https://localhost:7294/api/User/UpdateIsDarkmode';
+
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: 'true'
+        };
+
+        fetch(url, requestOptions)
+        .then(response=>{
+          if(!response.ok){
+            throw new Error('Error');
+          }
+          return response.json();
+        })
+        .then(data=>{
+        })
+        .catch(error=>{
+          console.log('Error', error);
+        });
+      }
+    else if(data=="true"){
+      var url = 'https://localhost:7294/api/User/UpdateIsDarkmode';
+
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: 'false'
+        };
+
+        fetch(url, requestOptions)
+        .then(response=>{
+          if(!response.ok){
+            throw new Error('Error');
+          }
+          return response.json();
+        })
+        .then(data=>{
+        })
+        .catch(error=>{
+          console.log('Error', error);
+        });
+    }
+
+    location.reload();
+
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+    
 }
