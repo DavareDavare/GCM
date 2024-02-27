@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareSimulationAPI", "HardwareSimulationAPI.csproj", "{75A0E3EB-0DA8-4667-8A05-B9D3CDEE6D3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75A0E3EB-0DA8-4667-8A05-B9D3CDEE6D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75A0E3EB-0DA8-4667-8A05-B9D3CDEE6D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75A0E3EB-0DA8-4667-8A05-B9D3CDEE6D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75A0E3EB-0DA8-4667-8A05-B9D3CDEE6D3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7547B8EC-E855-4F6E-9E07-C0B0F66C5AC8}
+	EndGlobalSection
+EndGlobal

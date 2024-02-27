@@ -1,0 +1,6 @@
+@HardwareSimulationAPI_HostAddress = http://localhost:5032
+
+GET {{HardwareSimulationAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

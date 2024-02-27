@@ -15,11 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PVAnlageApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< Updated upstream
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df32eec473d65d8bfe9f51bac27ac4c8efb48e31")]
->>>>>>> Stashed changes
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5162c2f34280373b4049b1c990cac064d4ddbd08")]
 [assembly: System.Reflection.AssemblyProductAttribute("PVAnlageApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PVAnlageApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
