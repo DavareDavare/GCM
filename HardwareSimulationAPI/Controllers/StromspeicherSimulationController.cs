@@ -10,7 +10,7 @@ namespace HardwareSimulationAPI.Controllers
             return View();
         }
 
-        // muss hier noch Werte generieren
+        // generiert random Werte für die Felder Value und Prozentvalue -> ausgegangen wird von einem maximalen Value von 10.000, das muss auf das Wirkliche angepasst werden
         [HttpGet("GetSimulation")]
         public IActionResult GetStromSimulation()
         {
@@ -25,6 +25,22 @@ namespace HardwareSimulationAPI.Controllers
             simulatedValue+= "[{\"value\":"+generatedValue+ " ,\"percentValue\":"+percentValue+" }]";
 
             return Ok(simulatedValue);
+        }
+
+        // generiert random Werte für das Feld Rate -> ausgegangen wird von einer maximalen Rate von 500, das muss auf das Wirkliche angepasst werden
+        [HttpGet("GetSimulationPv")]
+        public IActionResult GetPvSimulation()
+        {
+            var simulatedRate = "";
+
+            Random random = new Random();
+            float generatedrate = 0.0f + (float)random.NextDouble() * (500.0f - 0.0f);
+
+
+
+            simulatedRate += "[{\"rate\":" + generatedrate +" }]";
+
+            return Ok(simulatedRate);
         }
     }
 }
