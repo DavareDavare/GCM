@@ -208,9 +208,9 @@ function changecolour(){
 }
 
 function fetchallfromdb(){
-  //loadRate();
-  //loadHash();
-  //loadWeather();
+  loadRate();
+  loadHash();
+  loadWeather();
   loadColour();
   loadTheme();
 }
@@ -300,6 +300,56 @@ function loadColour(){
       console.log('Error', error);
     });
 }
+
+
+function loadTheme(){
+  var geturl = 'https://localhost:7294/api/User/GetIsDarkmode';
+
+  fetch(geturl)
+    .then(response=>{
+      if(!response.ok){
+        throw new Error('Error');
+      }
+      return response.json();
+    })
+    .then(data=>{
+
+      if(data=="false"){
+        var newLink = document.createElement('link');
+          newLink.rel = 'stylesheet';
+          newLink.type = 'text/css';
+          newLink.href = 'lightstyle.css';
+
+        var head = document.head;
+        var oldLink = document.getElementById('stylesheet');
+
+        if (oldLink) {
+          head.removeChild(oldLink);
+        }
+          head.appendChild(newLink);
+
+      }
+      else if(data=="true"){
+        var newLink = document.createElement('link');
+          newLink.rel = 'stylesheet';
+          newLink.type = 'text/css';
+          newLink.href = 'style.css';
+
+        var head = document.head;
+        var oldLink = document.getElementById('stylesheet');
+
+        if (oldLink) {
+          head.removeChild(oldLink);
+        }
+          head.appendChild(newLink);
+      }
+
+    })
+    .catch(error=>{
+      console.log('Error', error);
+    });
+}
+
 function loadSettings(){
   loadColour();
   loadTheme();
@@ -349,54 +399,6 @@ function loadasics(){
       console.log('Error', error);
     });
 
-}
-
-function loadTheme(){
-  var geturl = 'https://localhost:7294/api/User/GetIsDarkmode';
-
-  fetch(geturl)
-    .then(response=>{
-      if(!response.ok){
-        throw new Error('Error');
-      }
-      return response.json();
-    })
-    .then(data=>{
-
-      if(data=="false"){
-        var newLink = document.createElement('link');
-          newLink.rel = 'stylesheet';
-          newLink.type = 'text/css';
-          newLink.href = 'lightstyle.css';
-
-        var head = document.head;
-        var oldLink = document.getElementById('stylesheet');
-
-        if (oldLink) {
-          head.removeChild(oldLink);
-        }
-          head.appendChild(newLink);
-
-      }
-      else if(data=="true"){
-        var newLink = document.createElement('link');
-          newLink.rel = 'stylesheet';
-          newLink.type = 'text/css';
-          newLink.href = 'style.css';
-
-        var head = document.head;
-        var oldLink = document.getElementById('stylesheet');
-
-        if (oldLink) {
-          head.removeChild(oldLink);
-        }
-          head.appendChild(newLink);
-      }
-
-    })
-    .catch(error=>{
-      console.log('Error', error);
-    });
 }
 
 function switchTheme(){
