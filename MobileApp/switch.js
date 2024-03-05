@@ -152,10 +152,42 @@ function switchNiederschlag(){
   if(statusniederschlag==0){
 
     statusniederschlag=1;
+    var usedicon;
+
+    var geturl = 'https://api.open-meteo.com/v1/forecast?latitude=47.3441&longitude=13.3915&current=precipitation&forecast_days=1';
+
+    fetch(geturl)
+      .then(response=>{
+        if(!response.ok){
+          throw new Error('Error');
+        }
+        return response.json();
+      })
+      .then(data=>{
+        var getniederschlag = data.current.precipitation;
+        let divclass = document.getElementById('AktuellerNiederschlag');
+
+        if(Number(getniederschlag).toFixed(2)<=1){
+          divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 200px; font-size: larger;"><thead><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg></thead></table>';
+        }
+        else if(Number(getniederschlag).toFixed(2)>1 && Number(getniederschlag).toFixed(2)<=10){
+          divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 200px; font-size: larger;"><thead><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cloud-fill" viewBox="0 0 16 16"><path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"/></svg></thead></table>';
+        }
+        else if(Number(getniederschlag).toFixed(2)>10){
+          divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 200px; font-size: larger;"><thead><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cloud-hail-fill" viewBox="0 0 16 16"><path d="M3.75 15.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m.408-3.724a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316M7.75 15.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m.408-3.724a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316m3.592 3.724a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m.408-3.724a.5.5 0 0 1 .316.632l-.5 1.5a.5.5 0 1 1-.948-.316l.5-1.5a.5.5 0 0 1 .632-.316m1.247-6.999a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 10.5H13a3 3 0 0 0 .405-5.973"/></svg></thead></table>';
+        }
+        else{
+          divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 200px; font-size: larger;"><thead><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-patch-question-fill" viewBox="0 0 16 16"><path d="M5.933.87a2.89 2.89 0 0 1 4.134 0l.622.638.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01zM7.002 11a1 1 0 1 0 2 0 1 1 0 0 0-2 0m1.602-2.027c.04-.534.198-.815.846-1.26.674-.475 1.05-1.09 1.05-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.7 1.7 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745.336 0 .504-.24.554-.627"/></svg></thead></table>';
+        }
+      })
+      .catch(error=>{
+        console.log('Error', error);
+      });
+
 
     //creates a new table with the weather data / existing error: only a placeholder up until now, yet to be filled with real weather data
     let divclass = document.getElementById('AktuellerNiederschlag');
-    divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 300px; font-size: larger;"><thead><th> 06:00 </th><th> 12:00 </th><th> 18:00 </th><th> 00:00 </th></thead><tbody><tr><td> <i class="fa fa-cloud"></i> </td><td> <i class="fa fa-cloud"></i>  </td><td>  <i class="fa fa-cloud"></i>  </td><td>  <i class="fa fa-cloud"></i>  </td></tr></tbody></table>';
+    divclass.innerHTML = '<table class="col-12 col-md-8" id="showweather" style="text-align: center; width: 200px; font-size: larger;"><thead><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/></svg></thead></table>';
 
     //closes the two other data-sections if opened
     if(statusHash==1){
@@ -227,8 +259,9 @@ function loadRate(){
       return response.json();
     })
     .then(data=>{
-      var getrate = data[0].rate;
-      divclass.querySelector("h2").innerHTML=getrate+' %';
+      var datalength = data.length-1;
+      var getrate = data[datalength].rate;
+      divclass.querySelector("h2").innerHTML=Number(getrate).toFixed(2)+' kW/h';
     })
     .catch(error=>{
       console.log('Error', error);
@@ -247,8 +280,9 @@ function loadHash(){
       return response.json();
     })
     .then(data=>{
-      var gethash = data[0].hashRate;
-      divclass.querySelector("h2").innerHTML=gethash+' TH/s';
+      var datalength = data.length-1;
+      var gethash = data[datalength].hashRate;
+      divclass.querySelector("h2").innerHTML=Number(gethash).toFixed(2)+' TH/s';
     })
     .catch(error=>{
       console.log('Error', error);
@@ -257,8 +291,8 @@ function loadHash(){
 
 function loadWeather(){
   let divclass = document.getElementById('niederschlag');
-  /*Anpassen an url:
-  var geturl = '';
+  
+  var geturl = 'https://api.open-meteo.com/v1/forecast?latitude=47.3441&longitude=13.3915&current=precipitation&forecast_days=1';
 
   fetch(geturl)
     .then(response=>{
@@ -268,14 +302,13 @@ function loadWeather(){
       return response.json();
     })
     .then(data=>{
-      var gethash = data[0].hashRate;
-      divclass.querySelector("h2").innerHTML=gethash+' TH/s';
+      var getniederschlag = data.current.precipitation;
+      var getunit = data.current_units.precipitation;
+      divclass.querySelector("h2").innerHTML=Number(getniederschlag).toFixed(2)+' '+getunit;
     })
     .catch(error=>{
       console.log('Error', error);
-    });*/
-    var gethash = 1;
-      divclass.querySelector("h2").innerHTML=gethash+' %';
+    });
 }
 
 function loadColour(){
@@ -465,5 +498,4 @@ function switchTheme(){
     .catch(error=>{
       console.log('Error', error);
     });
-    
 }
