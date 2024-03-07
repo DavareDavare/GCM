@@ -1,20 +1,92 @@
 ﻿@page "/metrics"
+@using System.Text.RegularExpressions
 @inject ThemeStateService themeStateService;
 
 <div class="grid-container">
     <div class="griditem top-left">
-
+        <div>
+            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@Times.ToArray()" Width="100%" Height="350px" ChartOptions="@options" />
+        </div>
     </div>
     <div class="griditem top-right">
-
     </div>
     <div class="griditem bottom-left">
-
     </div>
     <div class="griditem bottom-right">
     </div>
 </div>
+//-
 
+
+@code {
+    private static readonly string Token = "Hi7fY6YPGWAQqpuPllFIkqGy4IylmPdWC70RiA86_zAjYwWY67_KxO_JVx2VXdZM1qwsOLGnz3AbAi-PltVU8A==";
+
+    private List<string> Times = new List<string>();
+    private List<string> Values = new List<string>();
+    private readonly ChartOptions options = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        options.YAxisTicks = 2;
+        options.MaxNumYAxisTicks = 5;
+        await base.OnInitializedAsync();
+
+        using var client = new InfluxDBClient("http://localhost:8086", Token);
+
+        var flux = "from(bucket:\"MinerData\") " +
+       "|> range(start: -7m) " + // Fetch data from the last 24 hours
+       "|> aggregateWindow(every: 1m, fn: mean) " + // Aggregate data over 3-hour intervals
+       "|> keep(columns: [\"_time\", \"_value\"]) " + // Keep only the time and value columns
+       "|> limit(n: 7)"; // Limit to 7 data points
+
+        var queryApi = client.GetQueryApi();
+        await queryApi.QueryAsync(flux, record =>
+        {
+            Console.WriteLine($"{record.GetTime()} {record.GetMeasurement()}: {record.GetValueByKey("_value")}");
+            Values.Add(record.GetValueByKey("_value").ToString());
+
+            string pattern = @"(?<=T)\d{2}:\d{2}:\d{2}";
+            Match match = Regex.Match(record.GetTime().ToString(), pattern);
+            if (match.Success)
+            {
+                string time = match.Value;
+                Times.Add(time);
+                Console.WriteLine(time); // Output: 20:30:00
+            }
+            else
+            {
+                Console.WriteLine("Time not found");
+            }
+        }, exception =>
+    {
+        Console.WriteLine($"Error occurred: {exception.Message}");
+    }, () =>
+            {
+                Console.WriteLine("Query completed");
+            }, "HTL");
+
+        // Close client
+        client.Dispose();
+        GenerateLines();
+    }
+
+
+    public List<ChartSeries> Series = new List<ChartSeries>();
+
+    Random random = new Random();
+    public void GenerateLines()
+    {
+        var newSeries = new List<ChartSeries>();
+        var series = new ChartSeries() { Name = "Hashrate der Whatsminer", Data = new double[7] };
+        for (int i = 0; i < 7; i++)
+        {
+            series.Data[i] = double.Parse(Values[i]);
+        }
+        newSeries.Add(series);
+        Series = newSeries;
+        StateHasChanged();
+    }
+}
 @{
     bool useDarkTheme = themeStateService.UseDarkTheme;
     string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
