@@ -19,7 +19,12 @@ function switchRate(){
 
     statusRate = 1;
 
-    //calculates the exact time of the last 20 hours, separated by 4 hours each
+    var curr;
+    var oneAgo;
+    var twoAgo ;
+    var threeAgo;
+    var fourAgo;
+    var fiveAgo;
     var currDate = new Date();
     var currTime = currDate.getHours()+":"+currDate.getMinutes()+":"+currDate.getSeconds();
     var oneAgoTime = (currDate.getHours()-4)+":"+currDate.getMinutes()+":"+currDate.getSeconds();
@@ -28,31 +33,56 @@ function switchRate(){
     var fourAgoTime = (currDate.getHours()-16)+":"+currDate.getMinutes()+":"+currDate.getSeconds();
     var fiveAgoTime = (currDate.getHours()-20)+":"+currDate.getMinutes()+":"+currDate.getSeconds();
 
-    let divclass = document.getElementById('rate');
-      divclass.querySelector("h2").innerHTML="";
-    let chartclass = document.getElementById('chartDiv');
-      chartclass.style="position: relative; height:30vh; width:60vw;";
+    var geturl = 'https://localhost:7000/api/Pvanlage/GetPv';
 
-    //creates a line-chart with the given data / existing error: is yet to be filled with the real data, up until now works based on proto-data
-    var chart = JSC.chart('chartDiv', {
-        debug: true,
-        type: 'line',
-        legend_position: 'inside bottom right',
-        xAxis: { type: 'time' },
-        series: [
-          {
-            name: 'Hours',
-            points: [
-              [fiveAgoTime, 29.9],
-              [fourAgoTime, 71.5],
-              [threeAgoTime, 106.4],
-              [twoAgoTime, 129.2],
-              [oneAgoTime, 144.0],
-              [currTime, 176.0]
-            ]
-          }
-        ]
-    });
+    fetch(geturl)
+      .then(response=>{
+        if(!response.ok){
+          throw new Error('Error');
+        }
+        return response.json();
+      })
+      .then(data=>{
+        var datalength = data.length-1;
+          curr = data[datalength].rate;
+          oneAgo = data[datalength-1].rate;
+          twoAgo = data[datalength-2].rate;
+          threeAgo = data[datalength-3].rate;
+          fourAgo = data[datalength-4].rate;
+          fiveAgo = data[datalength-5].rate;
+
+
+          let divclass = document.getElementById('rate');
+          divclass.querySelector("h2").innerHTML="";
+          let chartclass = document.getElementById('chartDiv');
+          chartclass.style="position: relative; height:30vh; width:60vw;";
+
+          //creates a line-chart with the given data / existing error: is yet to be filled with the real data, up until now works based on proto-data
+          var chart = JSC.chart('chartDiv', {
+              debug: true,
+              type: 'line',
+              legend_position: 'inside bottom right',
+              xAxis: { type: 'time' },
+              series: [
+                {
+                  name: 'Hours',
+                  points: [
+                    [fiveAgoTime, fiveAgo],
+                    [fourAgoTime, fourAgo],
+                    [threeAgoTime, threeAgo],
+                    [twoAgoTime, twoAgo],
+                    [oneAgoTime, oneAgo],
+                    [currTime, curr]
+                  ]
+                }
+              ]
+          });
+
+      })
+      .catch(error=>{
+        console.log('Error', error);
+      });
+
 
     //closes the two other data-sections if opened
     if(statusHash==1){
@@ -86,7 +116,12 @@ function switchHash(){
       
     statusHash = 1;
 
-    //calculates the exact time of the last 20 hours, separated by 4 hours each
+    var curr;
+    var oneAgo;
+    var twoAgo ;
+    var threeAgo;
+    var fourAgo;
+    var fiveAgo;
     var currDate = new Date();
     var currTime = currDate.getHours()+":"+currDate.getMinutes()+":"+currDate.getSeconds();
     var oneAgoTime = (currDate.getHours()-4)+":"+currDate.getMinutes()+":"+currDate.getSeconds();
@@ -95,31 +130,80 @@ function switchHash(){
     var fourAgoTime = (currDate.getHours()-16)+":"+currDate.getMinutes()+":"+currDate.getSeconds();
     var fiveAgoTime = (currDate.getHours()-20)+":"+currDate.getMinutes()+":"+currDate.getSeconds();
 
-    let divclass = document.getElementById('hash');
-    divclass.querySelector("h2").innerHTML="";
-    let chartclass = document.getElementById('chartDivHash');
-    chartclass.style="position: relative; height:30vh; width:60vw;";
+    var geturl = 'https://localhost:7294/api/Miner/GetMiner';
 
-    //creates a line-chart with the given data / existing error: is yet to be filled with the real data, up until now works based on proto-data
-    var chart = JSC.chart('chartDivHash', {
-        debug: true,
-        type: 'line',
-        legend_position: 'inside bottom right',
-        xAxis: { type: 'time' },
-        series: [
-          {
-            name: 'Hours',
-            points: [
-              [fiveAgoTime, 29.9],
-              [fourAgoTime, 71.5],
-              [threeAgoTime, 106.4],
-              [twoAgoTime, 129.2],
-              [oneAgoTime, 144.0],
-              [currTime, 176.0]
-            ]
-          }
-        ]
+    fetch(geturl)
+      .then(response=>{
+        if(!response.ok){
+          throw new Error('Error');
+        }
+        return response.json();
+      })
+      .then(data=>{
+        var datalength = data.length-1;
+          curr = data[datalength].hashRate;
+          oneAgo = data[datalength-1].hashRate;
+          twoAgo = data[datalength-2].hashRate;
+          threeAgo = data[datalength-3].hashRate;
+          fourAgo = data[datalength-4].hashRate;
+          fiveAgo = data[datalength-5].hashRate;
+
+          let divclass = document.getElementById('hash');
+          divclass.querySelector("h2").innerHTML="";
+          let chartclass = document.getElementById('chartDivHash');
+          chartclass.style="position: relative; height:30vh; width:60vw;";
+      
+          //creates a line-chart with the given data / existing error: is yet to be filled with the real data, up until now works based on proto-data
+          var chart = JSC.chart('chartDivHash', {
+              debug: true,
+              type: 'line',
+              legend_position: 'inside bottom right',
+              xAxis: { type: 'time' },
+              series: [
+                {
+                  //so soll es sein, Rest ist derweil nur Beispielwert
+                  name: 'Miner1',
+                  points: [
+                    [fiveAgoTime, fiveAgo],
+                    [fourAgoTime, fourAgo],
+                    [threeAgoTime, threeAgo],
+                    [twoAgoTime, twoAgo],
+                    [oneAgoTime, oneAgo],
+                    [currTime, curr]
+                  ]
+                },
+                {
+                  name: 'Miner2',
+                  points: [
+                    [fiveAgoTime, fiveAgo],
+                    [fourAgoTime, fourAgo],
+                    [threeAgoTime, threeAgo],
+                    [twoAgoTime, curr],
+                    [oneAgoTime, curr],
+                    [currTime, curr]
+                  ]
+                },
+                {
+                  name: 'Miner3',
+                  points: [
+                    [fiveAgoTime, curr],
+                    [fourAgoTime, curr],
+                    [threeAgoTime, threeAgo],
+                    [twoAgoTime, twoAgo],
+                    [oneAgoTime, oneAgo],
+                    [currTime, curr]
+                  ]
+                }
+              ]
+            });
+
+
+      })
+      .catch(error=>{
+        console.log('Error', error);
       });
+
+
 
       //closes the two other data-sections if opened
       if(statusRate==1){
