@@ -176,10 +176,6 @@
     {
         try
         {
-            // Check if there is a DB entry
-            var responseString = await client.GetStringAsync("https://localhost:7294/api/User/GetSettings");
-            List<Usersettings> usersettings = JsonConvert.DeserializeObject<List<Usersettings>>(responseString);
-
             var settingsstring = await client.GetStringAsync("https://localhost:7294/api/Miner/GetMiner");
             List<Miner> minersfromdb = JsonConvert.DeserializeObject<List<Miner>>(settingsstring);
             // Calculate hashrate if there are entries

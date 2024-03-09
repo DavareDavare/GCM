@@ -63,4 +63,3 @@ public class ThemeStateService
     public void NotifyStateChanged() => OnChange?.Invoke();
     // Null Check mit '?' benötigt, falls es keine Subs. gibt
 }
-ß
