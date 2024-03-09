@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PVAnlageApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4bc749608de02a516525edfb04cfbb2dcc7a23b6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+899f552eaf3bce8c1ea97b7b54747bc1bae02a3e")]
 [assembly: System.Reflection.AssemblyProductAttribute("PVAnlageApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PVAnlageApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

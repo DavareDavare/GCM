@@ -3163,11 +3163,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+      "projectUniqueName": "C:\\Users\\Davare\\Documents\\GitHub\\Github\\GCM\\Diplom\\Diplom\\Diplom.csproj",
       "projectName": "Diplom",
-      "projectPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+      "projectPath": "C:\\Users\\Davare\\Documents\\GitHub\\Github\\GCM\\Diplom\\Diplom\\Diplom.csproj",
       "packagesPath": "C:\\Users\\Davare\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\obj\\",
+      "outputPath": "C:\\Users\\Davare\\Documents\\GitHub\\Github\\GCM\\Diplom\\Diplom\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

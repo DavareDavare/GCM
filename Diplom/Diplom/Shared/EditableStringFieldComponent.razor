@@ -1,0 +1,61 @@
+﻿<!--
+    Switch zwischen Inputfield und Wert
+-->
+@if (!IsEditing)
+{
+    <h1 class="values" @onclick="StartEditing">@Value</h1>
+}
+else
+{
+    <div class="inputfield">
+        <input type="text" class="textfield" @bind="EditingValue" @onblur="UpdateValue" @onkeyup="HandleKeyPress" @ref="inputField"/>
+    </div>
+}
+
+@code {
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    private bool IsEditing { get; set; }
+    private string EditingValue { get; set; }
+    private ElementReference inputField;
+
+    //Bool Variable um Textfeld anzuzeigen
+    //Ebenfalls Speicherung der vorherigen Variable
+    public async Task StartEditing()
+    {
+        IsEditing = true;
+        EditingValue = Value;
+    }
+
+    //Setzen des Wertes
+    private void UpdateValue()
+    {
+        IsEditing = false;
+        ValueChanged.InvokeAsync(EditingValue);
+    }
+
+    //Bestätigung der Eingabe
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" || e.Key == "Escape")
+        {
+            UpdateValue();
+        }
+    }
+}
+
+<style>
+    .inputfield
+    {
+        margin-top:50px;
+        display: flex;
+        align-content:center;
+        justify-content: center;
+    }
+
+    .textfield
+    {
+        height:40px;
+    }
+</style>

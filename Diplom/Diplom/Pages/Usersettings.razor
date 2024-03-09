@@ -13,8 +13,17 @@
             <img src="@imageSource" alt="Your Image" class="header-image" />
         </label>
         <div class="header-text">
-            <h1 class="name">@name</h1>
-            <h2>UI Personalisierung</h2>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="error-message">
+                    @errorMessage
+                </div>
+            }
+            else
+            {
+                <EditableStringFieldComponent Value="@name" ValueChanged="UpdateUsername" />
+            }
+            <h1 class="head">UI Personalisierung</h1>
         </div>
     </div>
 </div>
@@ -25,7 +34,7 @@
             <h1 class="title">Strompreis</h1>
 
             <div class="md-textfield">
-                <input type="text" class="my-textfield" required placeholder="">
+                <input type="text" class="my-textfield" @bind="Strompreis" placeholder="" @onblur="UpdatePreis">
                 <label for="my-textfield">Cent / kWh</label>
                 <p>Aktuell zu bezahlender Strompreis</p>
             </div>
@@ -85,9 +94,10 @@
 @code {
     private byte[]? image = null;
     private string name = "User";
-    private float strompreis = 0;
+    private string Strompreis = "";
     private bool isDarkmode = false;
     private string color = "#B72626";
+    private string errorMessage = "";
 
     private string imageSource = "";
 
@@ -101,14 +111,34 @@
             color = usersettings[0].Color;
             isDarkmode = usersettings[0].IsDarkmode;
             name = usersettings[0].Name;
-            strompreis = usersettings[0].Strompreis;
             image = usersettings[0].Image;
+            float initial = usersettings[0].Strompreis;
+            Strompreis = initial != 0 ? initial.ToString() : "";
             imageSource = image != null ? $"data:image/png;base64,{Convert.ToBase64String(image)}" : string.Empty;
         }
         catch (HttpRequestException ex)
         {
             // Handle the exception by displaying an error message
             string errorMessage = $"Error loading miner data: {ex.Message}";
+        }
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(100);
+
+        // Trigger re-render
+        StateHasChanged();
+    }
+
+    public async Task UpdatePreis()
+    {
+        try
+        {
+            var response = await client.PutAsync("https://localhost:7294/api/User/UpdateStrompreis", new StringContent(Strompreis, Encoding.UTF8, "application/json"));
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            errorMessage = $"Error updating hashrate: {ex.Message}";
         }
 
         // Introduce a delay of 1 second (1000 milliseconds)
@@ -184,6 +214,28 @@
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
     }
+
+    private async void UpdateUsername(string newName)
+    {
+        try
+        {
+            var response = await client.PutAsync("https://localhost:7294/api/User/UpdateName", new StringContent($"\"{newName}\"", Encoding.UTF8, "application/json"));
+            
+            name = newName;
+        }
+        catch (HttpRequestException ex)
+        {
+            // Handle the exception by displaying an error message
+            errorMessage = $"Error updating hashrate: {ex.Message}";
+        }
+
+        // Introduce a delay of 1 second (1000 milliseconds)
+        await Task.Delay(100);
+
+        // Trigger re-render
+        StateHasChanged();
+    }
+
 }
 
 @{
@@ -268,6 +320,26 @@
 
     label:last-child span {
         border-radius: 0 .375em .375em 0;
+    }
+
+    .values
+    {
+        margin: 0px;
+        display:flex;
+        text-align: start;
+        font-size:40px;
+    }
+
+    .inputfield
+    {
+        display: flex;
+        text-align: start;
+        justify-content: start;
+    }
+
+    .head
+    {
+        font-size:25px;
     }
 
     .theme
@@ -443,6 +515,7 @@
     .header-text {
         color: @themeTextColor;
         align-content: center;
+        padding-top: 20px;
     }
 
     .parent {

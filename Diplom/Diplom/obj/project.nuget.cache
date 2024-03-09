@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S8pHsdITf/TBwcOxL+MVLFUeQoNX19V57W1vw/2Mv56HviOgyP+L8wOcdevT7yxVPKg1ZaQ2AREeiWy8aCHEDQ==",
+  "dgSpecHash": "IW60MwhxKfguD72YGEm1My0g+7J4YYg/PAED7dSeAusY8QZirqhCQ/huVJbMOXo3nMpeLLXHuvMIAR1JurEphg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Davare\\Documents\\GitHub\\GCM\\Diplom\\Diplom\\Diplom.csproj",
+  "projectFilePath": "C:\\Users\\Davare\\Documents\\GitHub\\Github\\GCM\\Diplom\\Diplom\\Diplom.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Davare\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512",
     "C:\\Users\\Davare\\.nuget\\packages\\influxdb.client\\4.14.0\\influxdb.client.4.14.0.nupkg.sha512",
