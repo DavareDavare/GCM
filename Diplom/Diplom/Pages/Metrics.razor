@@ -1,92 +1,70 @@
 ﻿@page "/metrics"
 @using System.Text.RegularExpressions
 @inject ThemeStateService themeStateService;
+@inject IJSRuntime JSRuntime;
 
 <div class="grid-container">
     <div class="griditem top-left">
         <div>
-            <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@Times.ToArray()" Width="100%" Height="350px" ChartOptions="@options" />
+            @{
+                if(dataloaded)
+                {
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@WhatsminerHashrate" XAxisLabels="@Times.ToArray()" Width="100%" Height="350px" ChartOptions="@options" />
+                }else
+                {
+                    <p>Is the API on?</p>
+                }
+            }
+            
         </div>
     </div>
     <div class="griditem top-right">
+        <div>
+            @{
+                if (dataloaded)
+                {
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@WhatsminerTemp" XAxisLabels="@Times.ToArray()" Width="100%" Height="350px" ChartOptions="@options" />
+                }
+                else
+                {
+                    <p>Is the API on?</p>
+                }
+            }
+
+        </div>
     </div>
     <div class="griditem bottom-left">
+        <div>
+            @{
+                if (dataloaded)
+                {
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@AntminerHashrate" XAxisLabels="@Times.ToArray()" Width="100%" Height="350px" ChartOptions="@options" />
+                }
+                else
+                {
+                    <p>Is the API on?</p>
+                }
+            }
+
+        </div>
     </div>
     <div class="griditem bottom-right">
+        <div>
+            @{
+                if (dataloaded)
+                {
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@AntminerTemps" XAxisLabels="@Times.ToArray()" Width="100%" Height="350px" ChartOptions="@options" />
+                }
+                else
+                {
+                    <p>Is the API on?</p>
+                }
+            }
+
+        </div>
     </div>
 </div>
-//-
 
-
-@code {
-    private static readonly string Token = "Hi7fY6YPGWAQqpuPllFIkqGy4IylmPdWC70RiA86_zAjYwWY67_KxO_JVx2VXdZM1qwsOLGnz3AbAi-PltVU8A==";
-
-    private List<string> Times = new List<string>();
-    private List<string> Values = new List<string>();
-    private readonly ChartOptions options = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        options.YAxisTicks = 2;
-        options.MaxNumYAxisTicks = 5;
-        await base.OnInitializedAsync();
-
-        using var client = new InfluxDBClient("http://localhost:8086", Token);
-
-        var flux = "from(bucket:\"MinerData\") " +
-       "|> range(start: -7m) " + // Fetch data from the last 24 hours
-       "|> aggregateWindow(every: 1m, fn: mean) " + // Aggregate data over 3-hour intervals
-       "|> keep(columns: [\"_time\", \"_value\"]) " + // Keep only the time and value columns
-       "|> limit(n: 7)"; // Limit to 7 data points
-
-        var queryApi = client.GetQueryApi();
-        await queryApi.QueryAsync(flux, record =>
-        {
-            Console.WriteLine($"{record.GetTime()} {record.GetMeasurement()}: {record.GetValueByKey("_value")}");
-            Values.Add(record.GetValueByKey("_value").ToString());
-
-            string pattern = @"(?<=T)\d{2}:\d{2}:\d{2}";
-            Match match = Regex.Match(record.GetTime().ToString(), pattern);
-            if (match.Success)
-            {
-                string time = match.Value;
-                Times.Add(time);
-                Console.WriteLine(time); // Output: 20:30:00
-            }
-            else
-            {
-                Console.WriteLine("Time not found");
-            }
-        }, exception =>
-    {
-        Console.WriteLine($"Error occurred: {exception.Message}");
-    }, () =>
-            {
-                Console.WriteLine("Query completed");
-            }, "HTL");
-
-        // Close client
-        client.Dispose();
-        GenerateLines();
-    }
-
-
-    public List<ChartSeries> Series = new List<ChartSeries>();
-
-    Random random = new Random();
-    public void GenerateLines()
-    {
-        var newSeries = new List<ChartSeries>();
-        var series = new ChartSeries() { Name = "Hashrate der Whatsminer", Data = new double[7] };
-        for (int i = 0; i < 7; i++)
-        {
-            series.Data[i] = double.Parse(Values[i]);
-        }
-        newSeries.Add(series);
-        Series = newSeries;
-        StateHasChanged();
-    }
-}
 @{
     bool useDarkTheme = themeStateService.UseDarkTheme;
     string themeBackgroundColor = useDarkTheme ? "#141218" : "#dbd4c6";
@@ -94,12 +72,304 @@
     string themeTextColor = useDarkTheme ? "#FFFFF0" : "#776B5D";
 }
 
+
+
+@code {
+    private static readonly string Token = "Hi7fY6YPGWAQqpuPllFIkqGy4IylmPdWC70RiA86_zAjYwWY67_KxO_JVx2VXdZM1qwsOLGnz3AbAi-PltVU8A==";
+
+    private List<string> Times = new List<string>();
+    private List<string> WhatsminerHashrateValues = new List<string>();
+    private List<string> AntminerHashrateValues = new List<string>();
+    private List<string> WhatsminerTempValues = new List<string>();
+    private List<string> AntminerTempValues1 = new List<string>();
+    private List<string> AntminerTempValues2 = new List<string>();
+    private List<string> AntminerTempValues3 = new List<string>();
+    private List<List<string>> AntminerTempValueList = new List<List<string>>();
+    public List<ChartSeries> WhatsminerHashrate = new List<ChartSeries>();
+    public List<ChartSeries> AntminerHashrate = new List<ChartSeries>();
+    public List<ChartSeries> WhatsminerTemp = new List<ChartSeries>();
+    public List<ChartSeries> AntminerTemps = new List<ChartSeries>();
+    private readonly ChartOptions options = new();
+    public bool dataloaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetWhatsminerHashrate();
+        GetAntminerHashrate();
+        GetWhatsminerTemp();
+        GetAntminerTemp();
+
+        foreach(List<string> s in AntminerTempValueList)
+        {
+            foreach(string st in s)
+            {
+                Console.Write(st);
+            }
+            Console.WriteLine();
+        }
+
+    }
+
+    public async void GetWhatsminerHashrate()
+    {
+        try
+        {
+            options.YAxisTicks = 2;
+            options.MaxNumYAxisTicks = 8;
+            options.LineStrokeWidth = 2;
+            await base.OnInitializedAsync();
+
+            using var client = new InfluxDBClient("http://localhost:8086", Token);
+
+            var flux = "from(bucket:\"MinerData\") " +
+                       "|> range(start: -7m) " + // Fetch data from the last 7 minutes
+                       "|> filter(fn: (r) => r._measurement == \"Whatsminer_Hashrate\") " + // Filter by measurement
+                       "|> aggregateWindow(every: 1m, fn: mean) " + // Aggregate data over 1-minute intervals
+                       "|> keep(columns: [\"_time\", \"_value\"]) " + // Keep only the time and value columns
+                       "|> limit(n: 7)"; // Limit to 7 data points
+
+            var queryApi = client.GetQueryApi();
+            await queryApi.QueryAsync(flux, record =>
+            {
+                Console.WriteLine($"{record.GetTime()} {record.GetMeasurement()}: {record.GetValueByKey("_value")}");
+                WhatsminerHashrateValues.Add(record.GetValueByKey("_value").ToString());
+
+                string pattern = @"(?<=T)\d{2}:\d{2}:\d{2}";
+                Match match = Regex.Match(record.GetTime().ToString(), pattern);
+                if (match.Success)
+                {
+                    dataloaded = true;
+                    string time = match.Value;
+                    Times.Add(time);
+                }
+                else
+                {
+                    Console.WriteLine("Time not found");
+                }
+            }, exception =>
+        {
+            Console.WriteLine("Probably Not Enough Data.");
+            Console.WriteLine($"Error occurred: {exception.Message}");
+        }, () =>
+                {
+                    Console.WriteLine("Query completed");
+                }, "HTL");
+
+            // Close client
+            client.Dispose();
+            GenerateLinesWhatsminerHashrate();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public void GenerateLinesWhatsminerHashrate()
+    {
+        var newSeries = new List<ChartSeries>();
+        var series = new ChartSeries() { Name = "Hashrate der Whatsminer", Data = new double[7] };
+        for (int i = 0; i < 7; i++)
+        {
+            series.Data[i] = double.Parse(WhatsminerHashrateValues[i]);
+        }
+        newSeries.Add(series);
+        WhatsminerHashrate = newSeries;
+        StateHasChanged();
+    }
+
+    public async void GetAntminerHashrate()
+    {
+        try
+        {
+            options.YAxisTicks = 2;
+            options.MaxNumYAxisTicks = 8;
+            options.LineStrokeWidth = 2;
+            await base.OnInitializedAsync();
+
+            using var client = new InfluxDBClient("http://localhost:8086", Token);
+
+            var flux = "from(bucket:\"MinerData\") " +
+                       "|> range(start: -7m) " + // Fetch data from the last 7 minutes
+                       "|> filter(fn: (r) => r._measurement == \"Antminer_Hashrate\") " + // Filter by measurement
+                       "|> aggregateWindow(every: 1m, fn: mean) " + // Aggregate data over 1-minute intervals
+                       "|> keep(columns: [\"_time\", \"_value\"]) " + // Keep only the time and value columns
+                       "|> limit(n: 7)"; // Limit to 7 data points
+
+            var queryApi = client.GetQueryApi();
+            await queryApi.QueryAsync(flux, record =>
+            {
+                Console.WriteLine($"{record.GetTime()} {record.GetMeasurement()}: {record.GetValueByKey("_value")}");
+                AntminerHashrateValues.Add(record.GetValueByKey("_value").ToString());
+            }, exception =>
+        {
+            Console.WriteLine("Probably Not Enough Data.");
+            Console.WriteLine($"Error occurred: {exception.Message}");
+        }, () =>
+                {
+                    Console.WriteLine("Query completed");
+                }, "HTL");
+
+            // Close client
+            client.Dispose();
+            GenerateLinesAntminerHashrate();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public void GenerateLinesAntminerHashrate()
+    {
+        var newSeries = new List<ChartSeries>();
+        var series = new ChartSeries() { Name = "Hashrate der Antminer", Data = new double[7] };
+        for (int i = 0; i < 7; i++)
+        {
+            series.Data[i] = double.Parse(AntminerHashrateValues[i]);
+        }
+        newSeries.Add(series);
+        AntminerHashrate = newSeries;
+        StateHasChanged();
+    }
+
+    public async void GetWhatsminerTemp()
+    {
+        try
+        {
+            options.YAxisTicks = 2;
+            options.MaxNumYAxisTicks = 8;
+            options.LineStrokeWidth = 2;
+            await base.OnInitializedAsync();
+
+            using var client = new InfluxDBClient("http://localhost:8086", Token);
+
+            var flux = "from(bucket:\"MinerData\") " +
+                       "|> range(start: -7m) " + // Fetch data from the last 7 minutes
+                       "|> filter(fn: (r) => r._measurement == \"WhatsminerTemp\") " + // Filter by measurement
+                       "|> aggregateWindow(every: 1m, fn: mean) " + // Aggregate data over 1-minute intervals
+                       "|> keep(columns: [\"_time\", \"_value\"]) " + // Keep only the time and value columns
+                       "|> limit(n: 7)"; // Limit to 7 data points
+
+            var queryApi = client.GetQueryApi();
+            await queryApi.QueryAsync(flux, record =>
+            {
+                Console.WriteLine($"{record.GetTime()} {record.GetMeasurement()}: {record.GetValueByKey("_value")}");
+                WhatsminerTempValues.Add(record.GetValueByKey("_value").ToString());
+            }, exception =>
+        {
+            Console.WriteLine("Probably Not Enough Data.");
+            Console.WriteLine($"Error occurred: {exception.Message}");
+        }, () =>
+                {
+                    Console.WriteLine("Query completed");
+                }, "HTL");
+
+            // Close client
+            client.Dispose();
+            GenerateLinesWhatsminerTemp();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public void GenerateLinesWhatsminerTemp()
+    {
+        var newSeries = new List<ChartSeries>();
+        var series = new ChartSeries() { Name = "Temperatur der Whatsminer", Data = new double[7] };
+        for (int i = 0; i < 7; i++)
+        {
+            series.Data[i] = double.Parse(WhatsminerTempValues[i]);
+        }
+        newSeries.Add(series);
+        WhatsminerTemp = newSeries;
+        StateHasChanged();
+    }
+
+    public async void GetAntminerTemp()
+    {
+        try
+        {
+            options.YAxisTicks = 2;
+            options.MaxNumYAxisTicks = 8;
+            options.LineStrokeWidth = 2;
+            await base.OnInitializedAsync();
+
+            using var client = new InfluxDBClient("http://localhost:8086", Token);
+            for (int i = 0; i < 3; i++)
+            {
+                var flux = "from(bucket:\"MinerData\") " +
+              "|> range(start: -7m) " + // Fetch data from the last 7 minutes
+              $"|> filter(fn: (r) => r._measurement == \"AntminerTempOUT{i}\") " + // Filter by measurement
+              "|> aggregateWindow(every: 1m, fn: mean) " + // Aggregate data over 1-minute intervals
+              "|> keep(columns: [\"_time\", \"_value\"]) " + // Keep only the time and value columns
+              "|> limit(n: 7)"; // Limit to 7 data points
+
+                var queryApi = client.GetQueryApi();
+                await queryApi.QueryAsync(flux, record =>
+                {
+                Console.WriteLine($"{record.GetTime()} {record.GetMeasurement()}: {record.GetValueByKey("_value")}");
+                switch (i)
+                {
+                        case 0: AntminerTempValues1.Add(record.GetValueByKey("_value").ToString()); break;
+                        case 1: AntminerTempValues2.Add(record.GetValueByKey("_value").ToString()); break;
+                        case 2: AntminerTempValues3.Add(record.GetValueByKey("_value").ToString()); break;
+                }   
+                }, exception =>
+            {
+                Console.WriteLine("Probably Not Enough Data.");
+                Console.WriteLine($"Error occurred: {exception.Message}");
+            }, () =>
+                    {
+                        Console.WriteLine("Query completed");
+                    }, "HTL");
+            }
+            AntminerTempValueList.Add(AntminerTempValues1);
+            AntminerTempValueList.Add(AntminerTempValues2);
+            AntminerTempValueList.Add(AntminerTempValues3);
+            // Close client
+            client.Dispose();
+            GenerateLinesAntminerTemp();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public void GenerateLinesAntminerTemp()
+    {
+        var newSeries = new List<ChartSeries>();
+        for(int l = 0; l<3; l++)
+        {
+            var series = new ChartSeries() { Name = $"Temperaturen von Antminer {l+1}", Data = new double[7] };
+            for (int i = 0; i < 7; i++)
+            {
+                series.Data[i] = double.Parse(AntminerTempValueList[l][i]);
+            }
+            newSeries.Add(series);
+        }  
+        AntminerTemps = newSeries;
+        StateHasChanged();
+    }
+
+}
+
+
 <style>
 
     body
     {
         overflow: hidden;
     }
+
+    .mud-chart-legend
+    {
+        margin-top: -60px !important;
+    }
+
     .grid-container {
         margin-top: -150px;
         margin-right: 100px;
@@ -108,6 +378,21 @@
         grid-template-columns: 1fr 1fr; /* Two columns with equal width */
         grid-template-rows: 1fr 1fr; /* Two rows with equal height */
         gap: 125px;
+    }
+
+    text
+    {
+        fill: @themeTextColor;
+    }
+
+    .mud-typography
+    {
+        color: @themeTextColor;
+    }
+
+    path
+    {
+        background: @themeTextColor;
     }
 
     .top-left {
