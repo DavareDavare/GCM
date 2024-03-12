@@ -314,6 +314,7 @@ function loadRate(){
 function loadHash(){
   let divclass = document.getElementById('hash');
   var geturl = 'https://localhost:7294/api/Miner/GetMiner';
+  var numberraten = 0;
 
   fetch(geturl)
     .then(response=>{
@@ -323,10 +324,14 @@ function loadHash(){
       return response.json();
     })
     .then(data=>{
-      var datalength = data.length-1;
-      var gethash = data[datalength].hashRate;
-      divclass.querySelector("h2").innerHTML=Number(gethash).toFixed(2)+' TH/s';
+      var countminer = Object.keys(data).length;
+
+      for(let a = 0; a < countminer; a++){
+        numberraten = numberraten + data[a].hashRate;
+      }
+      divclass.querySelector("h2").innerHTML=Number(numberraten/countminer).toFixed(2)+' TH/s';
     })
+
     .catch(error=>{
       console.log('Error', error);
     });
