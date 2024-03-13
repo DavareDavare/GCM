@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MinerAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ddcd022f358b65e2a3e027a1a61325e0cfca5df")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee58dfb565f378c9d10f8188bd591670df7a2c0b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MinerAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MinerAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
