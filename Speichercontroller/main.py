@@ -5,7 +5,6 @@ from datetime import datetime
 # das hier muss dann umgetauscht werden auf die 'richtige' API vom Stromspeicher -> bis jetzt nur unsere Simulation
 url = "https://localhost:7093/GetSimulation"
 
-# verify=False brauche ich hier damit es funktioniert
 response = requests.get(url, verify=False)
 
 if response.status_code == 200:
