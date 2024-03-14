@@ -26,9 +26,8 @@ def Antminer(command, ip):
 
         if stdout.strip() == "":
             return {
-                'success': True,
-                'output': "No output after 1 minute",
-                'error': stderr
+                'success': False,
+                'error': "No output after 1 minute"
             }
         else:
             return {
@@ -45,7 +44,8 @@ def Antminer(command, ip):
 
 def Whatsminer(command, ip):
     try:
-        token = WhatsminerAccessToken(ip_address=ip)
+        token = WhatsminerAccessToken(ip_address=ip,
+                                      admin_password="crypt0rule5#")
         if command == "power_off":
             summary_json = WhatsminerAPI.get_read_only_info(access_token=token, cmd=command,
                                                             additional_params={"respbefore": "true"})
@@ -69,7 +69,6 @@ def Whatsminer(command, ip):
 
 class MyRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):
-        # ----------------------------------------Restart Methoden
         if self.path.lower() == '/restartantminer':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length).decode('utf-8')
