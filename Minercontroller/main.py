@@ -11,3 +11,5 @@ while True:
     print("New Data")
     call_scriptAntminer()
     call_scriptWhatsminer()
+    time.sleep(3600)
+
