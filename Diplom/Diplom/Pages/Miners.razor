@@ -29,7 +29,15 @@
                         <MudText Style="visibility:hidden">@miner.Id</MudText>
                     </MudCardContent>
                     <MudCardActions>
-                        <input type="checkbox" class="custom-control-input" id="@($"checkbox{miner.Id}")" @bind="miner.IsChecked" />
+                        <div class="actions">
+                            <div class="checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="@($"checkbox{miner.Id}")" @bind="miner.IsChecked" />
+                            </div>
+                            <div class="buttons">
+                                        <MudButton Variant="Variant.Filled" Color="Color.Tertiary" @onclick="(async () => await RestartMiner(miner))">Restart</MudButton>
+                                        <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="(async () => await TurnOffMiner(miner))">Turn Off</MudButton>
+                            </div>
+                        </div>
                     </MudCardActions>
                 </MudCard>
             }
@@ -269,6 +277,63 @@
         LoadMinersWithDelay();
     }
 
+    private async Task TurnOffMiner(Miner m)
+    {
+        try
+        {
+            var content = new StringContent($"{{\"ip\": \"{m.Ip}\"}}", Encoding.UTF8, "application/json");
+            if(m.Group == "Antminer")
+            {
+                var response = await client.PostAsync("http://localhost:8000/stopantminer", content);
+                Console.WriteLine("STOP ANT");
+                Console.WriteLine(response);
+            }
+            else if (m.Group == "Whatsminer")
+            {
+                var response = await client.PostAsync("http://localhost:8000/stopwhatsminer", content);
+                Console.WriteLine("STOP WHATS");
+                Console.WriteLine(response);
+            }
+            else
+            {
+                Console.WriteLine("Couldnt find Minergroup...");
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = $"Error shutting down: {ex.Message}";
+        }
+    }
+
+    private async Task RestartMiner(Miner m)
+    {
+        try
+        {
+            var content = new StringContent($"{{\"ip\": \"{m.Ip}\"}}", Encoding.UTF8, "application/json");
+            if (m.Group == "Antminer")
+            {
+                var response = await client.PostAsync("http://localhost:8000/restartantminer", content);
+                Console.WriteLine("RESTART ANT");
+                Console.WriteLine(response);
+            }
+            else if (m.Group == "Whatsminer")
+            {
+                var response = await client.PostAsync("http://localhost:8000/restartwhatsminer", content);
+                Console.WriteLine("RESTART WHATS");
+                Console.WriteLine(response);
+            }
+            else
+            {
+                Console.WriteLine("Couldnt find Minergroup...");
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = $"Error restarting: {ex.Message}";
+        }
+    }
+
+
 }
 
 
@@ -409,5 +474,27 @@
 
     .input{
         margin: 25px;
+    }
+
+    .actions
+    {
+        display: grid;
+        grid-template-columns: 0.2fr 0.8fr;
+        grid-template-rows: 1fr;
+        grid-column-gap: 150px;
+    }
+
+    .buttons
+    {
+        grid-area: 1 / 2 / 2 / 3;
+        display: flex;
+    }
+
+    .checkbox
+    {
+        grid-area: 1 / 1 / 2 / 2;
+        display: flex;
+        justify-content: center;
+        margin-left: 25px;
     }
 </style>

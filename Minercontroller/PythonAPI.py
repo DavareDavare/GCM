@@ -68,15 +68,28 @@ def Whatsminer(command, ip):
 
 
 class MyRequestHandler(http.server.BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')  # Allow requests from any origin
+        self.send_header('Access-Control-Allow-Methods', 'POST')  # Allow only POST requests
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')  # Allow only Content-Type header
+        self.end_headers()
+
     def do_POST(self):
+        # Set the response headers to allow CORS
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')  # Allow requests from any origin
+        self.send_header('Access-Control-Allow-Methods', 'POST')  # Allow only POST requests
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')  # Allow only Content-Type header
+        self.end_headers()
+
         if self.path.lower() == '/restartantminer':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length).decode('utf-8')
             ip = json.loads(post_data).get('ip', '')
             response = Antminer("Restart", ip)
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             self.wfile.write(json.dumps(response).encode())
 
         elif self.path.lower() == '/restartwhatsminer':
@@ -84,9 +97,6 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             post_data = self.rfile.read(content_length).decode('utf-8')
             ip = json.loads(post_data).get('ip', '')
             response = Whatsminer("restart_btminer", ip)
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             self.wfile.write(json.dumps(response).encode())
 
         # -----------------------------------------Stop Methoden
@@ -95,9 +105,6 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             post_data = self.rfile.read(content_length).decode('utf-8')
             ip = json.loads(post_data).get('ip', '')
             response = Whatsminer("power_off", ip)
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             self.wfile.write(json.dumps(response).encode())
 
         elif self.path.lower() == '/stopantminer':
@@ -105,13 +112,11 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             post_data = self.rfile.read(content_length).decode('utf-8')
             ip = json.loads(post_data).get('ip', '')
             response = Antminer("Quit", ip)
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
             self.wfile.write(json.dumps(response).encode())
 
         else:
             self.send_error(404)
+
 
 
 def run_server():
